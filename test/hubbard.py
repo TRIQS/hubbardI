@@ -21,8 +21,7 @@
 ################################################################################
 
 from pytriqs.archive import *
-#from pytriqs.applications.impurity_solvers.hubbard_I import Solver
-from hubbard_solver import Solver
+from pytriqs.applications.impurity_solvers.hubbard_I import Solver
 import numpy
 
 S = Solver(beta = 200, l=2)
