@@ -1,5 +1,3 @@
-.. _hubbardI:
-
 
 Hubbard I solver
 ================
@@ -19,10 +17,11 @@ There, the one-particle terms of this Hamiltonian are given by
 averaged over the Brillouin zone and :math:`\Sigma_{DC}` is the double counting
 correction to the self-energy. 
 
-Note that the Hubbard-I approximation is only reasonable for strongly-localized
+Note that the Hubbard I approximation is only reasonable for strongly-localized
 systems, e.g. local moment rare-earth compounds.  It is very fast and can be
-employed both on the Matsubara grid and on the real axis. The TRIQS interface
-to the Hubbard-I solver is described in :ref:`HubITRIQS`.  A detailed example
-of LDA+DMFT calculations of :math:`\gamma`-Ce within Hubbard-I approximation is
-presented in :ref:`LDADMFTtutorial`. 
+employed both on the Matsubara grid and on the real axis.
 
+The TRIQS interface to the Hubbard I solver is described in the documentation
+of the Wien2TRIQS application (:ref:`HubITRIQS`) where it is mostly used. A
+detailed example of LDA+DMFT calculations of :math:`\gamma`-Ce within the
+Hubbard I approximation is presented in :ref:`LDADMFTtutorial`.
