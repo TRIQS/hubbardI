@@ -2,14 +2,15 @@
 
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.mathjax',
+              'sphinx.ext.intersphinx',
               'matplotlib.sphinxext.plot_directive']
 
 source_suffix = '.rst'
 
 project = u'TRIQS Hubbard I Solver'
 copyright = u'2011-2013, L. Pourovskii'
-version = '1.0'
-release = '1.0.0'
+version = '@HUBBARD1_VERSION@'
+release = '@HUBBARD1_RELEASE@'
 
 mathjax_path = "@TRIQS_MATHJAX_PATH@/MathJax.js?config=default"
 
@@ -23,3 +24,6 @@ html_context = {'header_title': 'hubbard',
                                  ['About Hubbard I', 'about']]}
 
 htmlhelp_basename = 'TRIQSHubbardIdoc'
+
+intersphinx_mapping = {'python': ('http://docs.python.org/2.7', None), 'triqslibs': ('http://ipht.cea.fr/triqs', None),
+                       'triqsdft': ('http://ipht.cea.fr/triqs/dft_tools', None)}

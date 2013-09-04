@@ -22,6 +22,6 @@ systems, e.g. local moment rare-earth compounds.  It is very fast and can be
 employed both on the Matsubara grid and on the real axis.
 
 The TRIQS interface to the Hubbard I solver is described in the documentation
-of the Wien2TRIQS application (:ref:`HubITRIQS`) where it is mostly used. A
+of the Wien2TRIQS application (:ref:`triqsdft:HubITRIQS`) where it is mostly used. A
 detailed example of LDA+DMFT calculations of :math:`\gamma`-Ce within the
-Hubbard I approximation is presented in :ref:`LDADMFTtutorial`.
+Hubbard I approximation is presented in :ref:`triqsdft:LDADMFTtutorial`.
