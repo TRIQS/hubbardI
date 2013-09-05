@@ -5,12 +5,12 @@ Copyright (C) 2011-2013, L. Pourovskii
 1. Documentation
 
 You will find the documentation of this application under
-<http://ipht.cea.fr/triqs/hubbardI/>.
+<http://ipht.cea.fr/triqs/applications/hubbardI/>.
 
 2. Installation
 
 The installation steps are described in
-<http://ipht.cea.fr/triqs/hubbardI/install.html>
+<http://ipht.cea.fr/triqs/hubbardI/applications/install.html>
 
 3. Version
 
