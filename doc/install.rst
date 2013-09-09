@@ -17,7 +17,7 @@ Installation steps
 
 #. Download the sources of the solver from github::
 
-     $ git clone git@github.com:TRIQS/hubbardI.git src
+     $ git clone https://github.com/TRIQS/hubbardI.git src
 
 #. Create an empty build directory where you will compile the code::
 
