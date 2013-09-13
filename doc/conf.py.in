@@ -26,4 +26,4 @@ html_context = {'header_title': 'hubbard',
 htmlhelp_basename = 'TRIQSHubbardIdoc'
 
 intersphinx_mapping = {'python': ('http://docs.python.org/2.7', None), 'triqslibs': ('http://ipht.cea.fr/triqs', None),
-                       'triqsdft': ('http://ipht.cea.fr/triqs/dft_tools', None)}
+                       'triqsdft': ('http://ipht.cea.fr/triqs/applications/dft_tools', None)}
