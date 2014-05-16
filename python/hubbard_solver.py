@@ -85,18 +85,8 @@ class Solver:
         self.verbosity = verbosity
         self.Nmoments = 5
 
-        # U matrix:
-        # l = (Nlm-1)/2
-        # If T is specified, it is used to transform the Basis set
-        Umat = Umatrix(U_interact=U_int, J_hund=J_hund, l=self.l)
-        Umat(T=T)
-        Umat.reduce_matrix()
-        assert (Umat.N==Umat.Nmat),"Transformation that mixes spins is not implemented in hubbard_I Solver!!"
+        ur,umn,ujmn=self.__set_umatrix(U=U_int,J=J_hund,T=T)
 
-        # now we have the reduced matrices U and Up
-        self.ur = Umat.Ufull
-        self.umn  = Umat.Up             # reduced matrix, opposite spins
-        self.ujmn = Umat.U              # reduced matrix, same spins
 
         M = [x for x in self.G.mesh]
         self.zmsb = numpy.array([x for x in M],numpy.complex_)
@@ -116,7 +106,7 @@ class Solver:
 
         # call the fortran solver:
         temp = 1.0/self.beta
-        gf,tail,self.atocc,self.atmag = gf_hi_fullu(e0f=self.ealmat, ur=self.ur, umn=self.umn, ujmn=self.ujmn,
+        gf,tail,self.atocc,self.atmag = gf_hi_fullu(e0f=self.ealmat, ur=ur, umn=umn, ujmn=ujmn,
                                                     zmsb=self.zmsb, nmom=self.Nmoments, ns=self.Nspin, temp=temp, verbosity = self.verbosity)
 
         #self.sig = sigma_atomic_fullu(gf=self.gf,e0f=self.eal,zmsb=self.zmsb,ns=self.Nspin,nlm=self.Nlm)
@@ -156,7 +146,7 @@ class Solver:
 
         def test_distance(G1,G2, dist) :
             def f(G1,G2) :
-                print abs(G1.data - G2.data)
+                #print abs(G1.data - G2.data)
                 dS = max(abs(G1.data - G2.data).flatten())
                 aS = max(abs(G1.data).flatten())
                 return dS <= aS*dist
@@ -171,22 +161,26 @@ class Solver:
             mpi.report("Solver has not yet converged")
 
 
-    def GF_realomega(self, ommin, ommax, N_om, broadening=0.01):
+    def GF_realomega(self, ommin, ommax, N_om, U_int, J_hund, T=None, verbosity=0, broadening=0.01):
         """Calculates the GF and spectral function on the real axis."""
 
         delta_om = (ommax-ommin)/(1.0*(N_om-1))
 
         omega = numpy.zeros([N_om],numpy.complex_)
 
+        ur,umn,ujmn=self.__set_umatrix(U=U_int,J=J_hund,T=T)
+
         for i in range(N_om):
             omega[i] = ommin + delta_om * i + 1j * broadening
 
-        temp = 1.0/self.beta
-        gf,tail,self.atocc,self.atmag = gf_hi_fullu(e0f=self.ealmat, ur=self.ur, umn=self.umn, ujmn=self.ujmn,
-                                                    zmsb=omega, nmom=self.Nmoments, ns=self.Nspin, temp=temp, verbosity = self.verbosity)
-
-        for sig in self.a_list:
+        self.tailtempl={}
+        for sig,g in self.G:
+            self.tailtempl[sig] = copy.deepcopy(g.tail)
             for i in range(9): self.tailtempl[sig][i] *= 0.0
+
+        temp = 1.0/self.beta
+        gf,tail,self.atocc,self.atmag = gf_hi_fullu(e0f=self.ealmat, ur=ur, umn=umn, ujmn=ujmn,
+                                                    zmsb=omega, nmom=self.Nmoments, ns=self.Nspin, temp=temp, verbosity = verbosity)
 
         # transfer the data to the GF class:
         if (self.UseSpinOrbit):
@@ -226,7 +220,7 @@ class Solver:
         f.write('\neff. atomic levels, Iteration %s\n'%it)
         for i in range(self.Nlm*self.Nspin):
             for j in range(self.Nlm*self.Nspin):
-                f.write("%12.8f  "%self.ealmat[i,j])
+                f.write("%10.6f %10.6f   "%(self.ealmat[i,j].real,self.ealmat[i,j].imag))
             f.write("\n")
         f.close()
 
@@ -252,3 +246,19 @@ class Solver:
                         self.ealmat[cnt*self.Nlm + ii,cnt*self.Nlm + jj] = self.Eff_Atomic_Levels[ind][ii,jj]
 
             cnt += 1
+
+
+    def __set_umatrix(self,U,J,T=None):
+        # U matrix:
+        # l = (Nlm-1)/2
+        # If T is specified, it is used to transform the Basis set
+        Umat = Umatrix(U_interact=U, J_hund=J, l=self.l)
+        Umat(T=T)
+        Umat.reduce_matrix()
+        assert (Umat.N==Umat.Nmat),"Transformation that mixes spins is not implemented in hubbard_I Solver!!"
+
+        # now we have the reduced matrices U and Up
+        ur = Umat.Ufull
+        umn  = Umat.Up             # reduced matrix, opposite spins
+        ujmn = Umat.U              # reduced matrix, same spins
+        return ur, umn, ujmn
