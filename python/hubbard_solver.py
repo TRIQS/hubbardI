@@ -21,7 +21,7 @@
 ################################################################################
 
 from types import *
-from pytriqs.applications.dft.U_matrix import Umatrix
+from pytriqs.applications.dft.U_matrix import *
 from pytriqs.gf.local import *
 from hubbard_I import gf_hi_fullu, sigma_atomic_fullu
 import pytriqs.utility.mpi as mpi
@@ -252,13 +252,7 @@ class Solver:
         # U matrix:
         # l = (Nlm-1)/2
         # If T is specified, it is used to transform the Basis set
-        Umat = Umatrix(U_interact=U, J_hund=J, l=self.l)
-        Umat(T=T)
-        Umat.reduce_matrix()
-        assert (Umat.N==Umat.Nmat),"Transformation that mixes spins is not implemented in hubbard_I Solver!!"
+        Umat = U_matrix(l=self.l, U_int=U, J_hund=J, T=T)
+        U, Up = reduce_4index_to_2index(Umat)
 
-        # now we have the reduced matrices U and Up
-        ur = Umat.Ufull
-        umn  = Umat.Up             # reduced matrix, opposite spins
-        ujmn = Umat.U              # reduced matrix, same spins
-        return ur, umn, ujmn
+        return Umat, Up, U
