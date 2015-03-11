@@ -298,7 +298,7 @@ SUBROUTINE gf_HI_fullU(GF,Tail,e0f,ur,umn,ujmn,zmsb,nlm,Iwmax,nmom,ns,atocc,atma
      endif
   ENDDO
   IF (verbosity>1) THEN
-      WRITE(*,*)'Notmalization of atomic GF:'
+      WRITE(*,*)'Normalization of atomic GF:'
       DO m=1,nso 
         WRITE(*,*)Tail(1,m,m)
       ENDDO

@@ -35,7 +35,7 @@ class Solver:
     """
 
     # initialisation:
-    def __init__(self, beta, l, n_msb=1025, use_spin_orbit=False):
+    def __init__(self, beta, l, n_msb=1025, use_spin_orbit=False, Nmoments=5):
 
         self.name = "Hubbard I"
         self.beta = beta
@@ -44,6 +44,7 @@ class Solver:
         self.UseSpinOrbit = use_spin_orbit
         self.Converged = False
         self.Nspin = 2
+        self.Nmoments=Nmoments
 
         self.Nlm = 2*l+1
         if (use_spin_orbit):
@@ -82,8 +83,12 @@ class Solver:
             mpi.report("Solver %(name)s has already converged: SKIPPING"%self.__dict__)
             return
 
-        self.verbosity = verbosity
-        self.Nmoments = 5
+        if mpi.is_master_node():
+            self.verbosity = verbosity
+        else:
+            self.verbosity = 0
+
+        #self.Nmoments = 5
 
         ur,umn,ujmn=self.__set_umatrix(U=U_int,J=J_hund,T=T)
 
@@ -92,10 +97,10 @@ class Solver:
         self.zmsb = numpy.array([x for x in M],numpy.complex_)
 
         # for the tails:
-        self.tailtempl={}
+        tailtempl={}
         for sig,g in self.G:
-            self.tailtempl[sig] = copy.deepcopy(g.tail)
-            for i in range(9): self.tailtempl[sig][i] *= 0.0
+            tailtempl[sig] = copy.deepcopy(g.tail)
+            for i in range(9): tailtempl[sig][i] *= 0.0
 
         self.__save_eal('eal.dat',Iteration_Number)
 
@@ -128,11 +133,14 @@ class Solver:
             isp+=1
             M[a] = numpy.array(gf[isp*nlmtot:(isp+1)*nlmtot,isp*nlmtot:(isp+1)*nlmtot,:]).transpose(2,0,1).copy()
             for i in range(min(self.Nmoments,8)):
-                self.tailtempl[a][i+1] = tail[i][isp*nlmtot:(isp+1)*nlmtot,isp*nlmtot:(isp+1)*nlmtot]
+                tailtempl[a][i+1] = tail[i][isp*nlmtot:(isp+1)*nlmtot,isp*nlmtot:(isp+1)*nlmtot]
 
-        glist = lambda : [ GfImFreq(indices = al, beta = self.beta, n_points = self.Nmsb, data =M[a], tail =self.tailtempl[a])
-                           for a,al in self.gf_struct]
+        #glist = lambda : [ GfImFreq(indices = al, beta = self.beta, n_points = self.Nmsb, data =M[a], tail =self.tailtempl[a])
+        #                   for a,al in self.gf_struct]
+        glist = lambda : [ GfImFreq(indices = al, beta = self.beta, n_points = self.Nmsb) for a,al in self.gf_struct]
         self.G = BlockGf(name_list = self.a_list, block_list = glist(),make_copies=False)
+        
+        self.__copy_Gf(self.G,M,tailtempl)
 
         # Self energy:
         self.G0 <<= iOmega_n
@@ -173,10 +181,10 @@ class Solver:
         for i in range(N_om):
             omega[i] = ommin + delta_om * i + 1j * broadening
 
-        self.tailtempl={}
+        tailtempl={}
         for sig,g in self.G:
-            self.tailtempl[sig] = copy.deepcopy(g.tail)
-            for i in range(9): self.tailtempl[sig][i] *= 0.0
+            tailtempl[sig] = copy.deepcopy(g.tail)
+            for i in range(9): tailtempl[sig][i] *= 0.0
 
         temp = 1.0/self.beta
         gf,tail,self.atocc,self.atmag = gf_hi_fullu(e0f=self.ealmat, ur=ur, umn=umn, ujmn=ujmn,
@@ -194,11 +202,14 @@ class Solver:
             isp+=1
             M[a] = numpy.array(gf[isp*nlmtot:(isp+1)*nlmtot,isp*nlmtot:(isp+1)*nlmtot,:]).transpose(2,0,1).copy()
             for i in range(min(self.Nmoments,8)):
-                self.tailtempl[a][i+1] = tail[i][isp*nlmtot:(isp+1)*nlmtot,isp*nlmtot:(isp+1)*nlmtot]
+                tailtempl[a][i+1] = tail[i][isp*nlmtot:(isp+1)*nlmtot,isp*nlmtot:(isp+1)*nlmtot]
 
-        glist = lambda : [ GfReFreq(indices = al, window = (ommin, ommax), n_points = N_om, data = M[a], tail = self.tailtempl[a])
-                           for a,al in self.gf_struct]       # Indices for the upfolded G
+        #glist = lambda : [ GfReFreq(indices = al, window = (ommin, ommax), n_points = N_om, data = M[a], tail = self.tailtempl[a])
+        #                   for a,al in self.gf_struct]       # Indices for the upfolded G
+        glist = lambda : [ GfReFreq(indices = al, window = (ommin, ommax), n_points = N_om) for a,al in self.gf_struct]
         self.G = BlockGf(name_list = self.a_list, block_list = glist(),make_copies=False)
+
+        self.__copy_Gf(self.G,M,tailtempl)
 
         # Self energy:
         self.G0 = self.G.copy()
@@ -223,6 +234,13 @@ class Solver:
                 f.write("%10.6f %10.6f   "%(self.ealmat[i,j].real,self.ealmat[i,j].imag))
             f.write("\n")
         f.close()
+
+    def __copy_Gf(self,G,data,tail):
+        """ Copies data and tail to Gf object GF """
+        for s,g in G:
+            g.data[:,:,:]=data[s][:,:,:]
+            for imom in range(1,min(self.Nmoments,8)):
+                g.tail.data[1+imom,:,:]=tail[s][imom]
 
 
     def set_atomic_levels(self,eal):
