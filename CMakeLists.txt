@@ -1,6 +1,6 @@
 # Version number of the application
-set (HUBBARD1_VERSION "1.2")
-set (HUBBARD1_RELEASE "1.2.0")
+set (HUBBARD1_VERSION "1.3")
+set (HUBBARD1_RELEASE "1.3.0")
 
 # Append triqs installed files to the cmake load path
 list(APPEND CMAKE_MODULE_PATH ${TRIQS_PATH}/share/triqs/cmake)
