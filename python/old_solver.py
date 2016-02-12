@@ -20,7 +20,7 @@
 #
 ################################################################################
 
-from pytriqs.applications.impurity_solvers.hubbard_I import Solver
+from hubbard_solver import Solver
 import pytriqs.utility.mpi as mpi
 
 class SolverOld(Solver):

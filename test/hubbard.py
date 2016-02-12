@@ -22,6 +22,7 @@
 
 from pytriqs.archive import *
 from pytriqs.applications.impurity_solvers.hubbard_I import Solver
+from pytriqs.utility.comparison_tests import *
 import numpy
 
 S = Solver(beta = 200, l=2)
@@ -33,8 +34,6 @@ S.set_atomic_levels(eal=eal)
 
 S.solve(U_int = 6.0, J_hund=0.6)
 
-ar = HDFArchive('hubbard.output.h5')
-ar['G'] = S.G
-ar['Sigma'] = S.Sigma
-del ar
-
+h = HDFArchive('hubbard.ref.h5','r')
+assert_block_gfs_are_close(S.G, h['G'])
+assert_block_gfs_are_close(S.Sigma, h['Sigma'])
