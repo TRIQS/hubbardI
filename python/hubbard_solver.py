@@ -251,19 +251,36 @@ class Solver:
         cnt = 0
         self.ealmat[:,:] *= 0.0
 
-        for ind in eal:
-            self.Eff_Atomic_Levels[ind] = copy.deepcopy(eal[ind])
+        if self.UseSpinOrbit:
+            self.Eff_Atomic_Levels["ud"] = copy.deepcopy(eal["ud"])
 
-            if self.UseSpinOrbit:
-                for ii in range(self.Nlm*2):
-                    for jj in range(self.Nlm*2):
-                        self.ealmat[ii,jj] = self.Eff_Atomic_Levels[ind][ii,jj]
-            else:
+            for ii in range(self.Nlm*2):
+                for jj in range(self.Nlm*2):
+                    self.ealmat[ii,jj] = self.Eff_Atomic_Levels["ud"][ii,jj]
+
+        else:
+            for ind in ["up","down"]:
+                self.Eff_Atomic_Levels[ind] = copy.deepcopy(eal[ind])
+
                 for ii in range(self.Nlm):
                     for jj in range(self.Nlm):
                         self.ealmat[cnt*self.Nlm + ii,cnt*self.Nlm + jj] = self.Eff_Atomic_Levels[ind][ii,jj]
+                cnt += 1
 
-            cnt += 1
+
+#        for ind in eal:
+#            self.Eff_Atomic_Levels[ind] = copy.deepcopy(eal[ind])
+#
+#            if self.UseSpinOrbit:
+#                for ii in range(self.Nlm*2):
+#                    for jj in range(self.Nlm*2):
+#                        self.ealmat[ii,jj] = self.Eff_Atomic_Levels[ind][ii,jj]
+#            else:
+#                for ii in range(self.Nlm):
+#                    for jj in range(self.Nlm):
+#                        self.ealmat[cnt*self.Nlm + ii,cnt*self.Nlm + jj] = self.Eff_Atomic_Levels[ind][ii,jj]
+#
+#            cnt += 1
 
 
     def __set_umatrix(self,U,J,T=None):
