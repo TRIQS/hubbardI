@@ -59,13 +59,13 @@ SUBROUTINE gf_HI_fullU(GF,Tail,e0f,ur,umn,ujmn,zmsb,nlm,Iwmax,nmom,ns,atocc,atma
   integer, allocatable :: arr(:)
   REAL(KIND=8) :: U(nlm*ns,nlm*ns,nlm*ns,nlm*ns)
   COMPLEX(KIND=8) :: zener
-  real(8) :: Z, nomin, denom, E_B, tresh, maxexp, norm, ge
+  real(8) :: Z, nomin, denom, E_B, tresh, maxexp, norm, ge, atorb
   real(8) :: fsign, Eground, Zterm
   real(8), allocatable :: E_A(:), ummss(:,:), occ(:), docc(:), ener(:)
   integer, allocatable :: nground(:)
   INTEGER, PARAMETER :: numexp=650
   integer :: i, j, m, m1, is, is1, iom, ls
-  integer :: k, l, ideg, ie, i1, k1, Nat, NN
+  integer :: k, kl, l, ideg, ie, i1, k1, Nat, NN
   integer :: iloc 
   INTEGER :: nso, nstate
   REAL(KIND=8), EXTERNAL :: factor
@@ -248,10 +248,25 @@ SUBROUTINE gf_HI_fullU(GF,Tail,e0f,ur,umn,ujmn,zmsb,nlm,Iwmax,nmom,ns,atocc,atma
   if (verbosity>0) write(*,'(/,a,f12.5)')'Atomic mag. mom.  :',atmag
 
   OPEN(450,file='ATOMIC_LEVELS')
+  OPEN(320,file='STATES')
+  WRITE(450,'(a)')'    #     E       M_orb       M_spin      J_tot       M_tot'
   DO i=1,N_occ(Nat)%n
-     WRITE(450,*)i,N_occ(Nat)%En(i)
+    atorb=0d0
+    atmag=0d0
+    WRITE(320,*)N_occ(Nat)%Hn(1:N_occ(Nat)%n,i)
+    DO k=1,N_occ(Nat)%n
+       occ = merge(1.d0,0.d0,btest(N_occ(Nat)%st_n(k),arr(0:nso-1)))
+       atmag=atmag+(SUM(occ(1:nlm))-SUM(occ(nlm+1:nso)))*N_occ(Nat)%Hn(k,i)*CONJG(N_occ(Nat)%Hn(k,i))
+       DO kl=1,nlm
+          m=kl-(nlm+1)/2
+          atorb=atorb+m*(occ(kl)+occ(nlm+kl))*N_occ(Nat)%Hn(k,i)*CONJG(N_occ(Nat)%Hn(k,i))
+       ENDDO
+    ENDDO
+    !WRITE(450,*)i,N_occ(Nat)%En(i)
+    WRITE(450,'(i5,F15.8,4f9.5)')i,N_occ(Nat)%En(i),atorb,atmag,atorb+atmag/2d0, atorb+atmag
   ENDDO
   CLOSE(450)
+  CLOSE(320)
 
 ! Compute the Green's function
 
