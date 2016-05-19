@@ -227,13 +227,14 @@ class Solver:
 
 
     def __save_eal(self,Filename,it):
-        f=open(Filename,'a')
-        f.write('\neff. atomic levels, Iteration %s\n'%it)
-        for i in range(self.Nlm*self.Nspin):
-            for j in range(self.Nlm*self.Nspin):
-                f.write("%10.6f %10.6f   "%(self.ealmat[i,j].real,self.ealmat[i,j].imag))
-            f.write("\n")
-        f.close()
+        if mpi.is_master_node():
+            f=open(Filename,'a')
+            f.write('\neff. atomic levels, Iteration %s\n'%it)
+            for i in range(self.Nlm*self.Nspin):
+                for j in range(self.Nlm*self.Nspin):
+                    f.write("%10.6f %10.6f   "%(self.ealmat[i,j].real,self.ealmat[i,j].imag))
+                f.write("\n")
+            f.close()
 
     def __copy_Gf(self,G,data,tail):
         """ Copies data and tail to Gf object GF """
