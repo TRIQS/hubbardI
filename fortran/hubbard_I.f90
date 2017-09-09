@@ -474,10 +474,10 @@ subroutine sigma_atomic_fullU(GF,Sigma_mat,e0f,zmsb,nlm,Iwmax,ns)
      g=GF(:,:,iom)
 !------- LAPACK inversion of GF
      CALL ZGETRF(nlms,nlms,g,nlms,IPIV,INFO)
-     IF(info.ne.0) STOP'in SPTFLEX ZGETRF Info NE 0'
+     IF(info.ne.0) STOP 'in SPTFLEX ZGETRF Info NE 0'
         
      CALL ZGETRI(nlms,g,nlms,IPIV,WORK,nlms,INFO)
-     IF(info.ne.0) STOP'in SPTFLEX ZGETRI Info NE 0'
+     IF(info.ne.0) STOP 'in SPTFLEX ZGETRI Info NE 0'
 
      DO ind=1,nlm*ns
         DO ind1=1,nlm*ns
