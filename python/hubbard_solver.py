@@ -288,7 +288,14 @@ class Solver:
         # U matrix:
         # l = (Nlm-1)/2
         # If T is specified, it is used to transform the Basis set
-        Umat = U_matrix(l=self.l, U_int=U, J_hund=J, T=T)
-        U, Up = reduce_4index_to_2index(Umat)
+        if self.l > 0:
+            Umat = U_matrix(l=self.l, U_int=U, J_hund=J, T=T)
+            U, Up = reduce_4index_to_2index(Umat)
+        else:
+            Umat=numpy.zeros((1,1,1,1),dtype=float)
+            Umat[0,0,0,0]=U
+            U=numpy.zeros((1,1),dtype=float)
+            Up=numpy.zeros((1,1),dtype=float)
+            Up[0,0]=U
 
         return Umat, Up, U
