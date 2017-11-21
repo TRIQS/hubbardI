@@ -169,7 +169,7 @@ class Solver:
             mpi.report("Solver has not yet converged")
 
 
-    def GF_realomega(self, ommin, ommax, N_om, U_int, J_hund, T=None, verbosity=0, broadening=0.01):
+    def GF_realomega(self, ommin, ommax, N_om, U_int, J_hund, T=None, verbosity=0, broadening=0.01, N_lev=0, remove_split=False):
         """Calculates the GF and spectral function on the real axis."""
 
         delta_om = (ommax-ommin)/(1.0*(N_om-1))
@@ -188,7 +188,7 @@ class Solver:
 
         temp = 1.0/self.beta
         gf,tail,self.atocc,self.atmag = gf_hi_fullu(e0f=self.ealmat, ur=ur, umn=umn, ujmn=ujmn,
-                                                    zmsb=omega, nmom=self.Nmoments, ns=self.Nspin, temp=temp, verbosity = verbosity)
+                                                    zmsb=omega, nmom=self.Nmoments, ns=self.Nspin, temp=temp, verbosity = verbosity,remove_split = remove_split, nlev_cf = N_lev)
 
         # transfer the data to the GF class:
         if (self.UseSpinOrbit):
