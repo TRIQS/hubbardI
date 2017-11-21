@@ -3,7 +3,8 @@
 
 python module hubbard_I ! in 
     interface  ! in :hubbard_I
-        subroutine gf_hi_fullu(gf,tail,e0f,ur,umn,ujmn,zmsb,nlm,iwmax,nmom,ns,atocc,atmag,temp,verbosity) ! in :hubbard_I:hubbard_I.f90
+        subroutine gf_hi_fullu(gf,tail,e0f,ur,umn,ujmn,zmsb,nlm,iwmax,nmom,ns,atocc,atmag,temp,verbosity,remove_split,nlev_cf) ! in hubbard_I.f90:hubbard_i_data
+            use hubbard_i_data
             complex(kind=8) dimension(nlm*ns,nlm*ns,iwmax),intent(out),depend(nlm,ns,nlm,ns,iwmax) :: gf
             complex(kind=8) dimension(nmom,nlm*ns,nlm*ns),intent(out),depend(nmom,nlm,ns,nlm,ns) :: tail
             complex(kind=8) dimension(nlm*ns,nlm*ns),intent(in),depend(nlm,ns,nlm,ns) :: e0f
@@ -15,10 +16,12 @@ python module hubbard_I ! in
             integer optional,intent(in),check(len(zmsb)>=iwmax),depend(zmsb) :: iwmax=len(zmsb)
             integer intent(in) :: nmom
             integer intent(in) :: ns
-            integer intent(in) :: verbosity
             real(kind=8) intent(out) :: atocc
             real(kind=8) intent(out) :: atmag
             real(kind=8) intent(in) :: temp
+            integer intent(in) :: verbosity
+            logical :: remove_split
+            integer intent(in) :: nlev_cf
         end subroutine gf_hi_fullu
         subroutine sigma_atomic_fullu(gf,sigma_mat,e0f,zmsb,nlm,iwmax,ns) ! in :hubbard_I:hubbard_I.f90
             complex(kind=8) dimension(nlm*ns,nlm*ns,iwmax),intent(in),depend(nlm,ns,nlm,ns) :: gf
@@ -32,5 +35,5 @@ python module hubbard_I ! in
     end interface 
 end python module hubbard_I
 
-! This file was auto-generated with f2py (version:2_5237).
+! This file was auto-generated with f2py (version:2).
 ! See http://cens.ioc.ee/projects/f2py2e/

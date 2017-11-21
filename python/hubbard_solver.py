@@ -76,7 +76,7 @@ class Solver:
 
 
 
-    def solve(self, U_int, J_hund, T=None, verbosity=0, Iteration_Number=1, Test_Convergence=0.0001):
+    def solve(self, U_int, J_hund, T=None, verbosity=0, Iteration_Number=1, Test_Convergence=0.0001, N_lev=0, remove_split=False):
         """Calculation of the impurity Greens function using Hubbard-I"""
 
         if self.Converged :
@@ -112,7 +112,7 @@ class Solver:
         # call the fortran solver:
         temp = 1.0/self.beta
         gf,tail,self.atocc,self.atmag = gf_hi_fullu(e0f=self.ealmat, ur=ur, umn=umn, ujmn=ujmn,
-                                                    zmsb=self.zmsb, nmom=self.Nmoments, ns=self.Nspin, temp=temp, verbosity = self.verbosity)
+                                                    zmsb=self.zmsb, nmom=self.Nmoments, ns=self.Nspin, temp=temp, verbosity = self.verbosity,remove_split = remove_split, nlev_cf = N_lev)
 
         #self.sig = sigma_atomic_fullu(gf=self.gf,e0f=self.eal,zmsb=self.zmsb,ns=self.Nspin,nlm=self.Nlm)
 

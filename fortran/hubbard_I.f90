@@ -17,7 +17,8 @@ END MODULE hubbard_I_data
 
 
 
-SUBROUTINE gf_HI_fullU(GF,Tail,e0f,ur,umn,ujmn,zmsb,nlm,Iwmax,nmom,ns,atocc,atmag,temp,verbosity)
+SUBROUTINE gf_HI_fullU(GF,Tail,e0f,ur,umn,ujmn,zmsb,nlm,Iwmax,nmom,ns,atocc,atmag,temp,verbosity, &
+                       remove_split,nlev_cf)
 
 !
 ! Computes atomic GF with the full 4-index U 8.10.2007
@@ -38,7 +39,11 @@ SUBROUTINE gf_HI_fullU(GF,Tail,e0f,ur,umn,ujmn,zmsb,nlm,Iwmax,nmom,ns,atocc,atma
 ! nlm, ns /input/ - orbital and spin degeneracy
 ! atocc, atmag /output/ - occupancy and magnetic moment of the atom
 ! temp /input/ - temperature
-! verbosity - 0: no text output, 1: basics, 2: all
+! verbosity/input/ - 0: no text output, 1: basics, 2: all
+! remove_split/input/ - True: remove splitting between nlev_cf first levels of
+!                       GS occupancy
+! nlev_cf/input/ - the number of levels for which the splitting is removed, see
+!                  above
      
   USE hubbard_I_data  
   IMPLICIT NONE
@@ -50,7 +55,8 @@ SUBROUTINE gf_HI_fullU(GF,Tail,e0f,ur,umn,ujmn,zmsb,nlm,Iwmax,nmom,ns,atocc,atma
   REAL(KIND=8), INTENT(in) :: umn(nlm,nlm), ujmn(nlm,nlm)
   REAL(KIND=8), INTENT(in) :: ur(nlm,nlm,nlm,nlm)
   REAL(KIND=8), INTENT(in) :: temp
-  integer, intent(in) :: verbosity
+  INTEGER, INTENT(in) :: verbosity, nlev_cf
+  LOGICAL, INTENT(in) :: remove_split
   COMPLEX(KIND=8), INTENT(out) :: GF(nlm*ns,nlm*ns,Iwmax)
   Complex(kind=8), intent(out) :: Tail(nmom,nlm*ns,nlm*ns)
   REAL(KIND=8), INTENT(out) :: atocc, atmag
@@ -189,6 +195,32 @@ SUBROUTINE gf_HI_fullU(GF,Tail,e0f,ur,umn,ujmn,zmsb,nlm,Iwmax,nmom,ns,atocc,atma
      ENDIF
 
   ENDDO
+
+  IF (remove_split) THEN
+      ! remove splitting between first nlev_cf levels 
+      !
+      OPEN(450,file='GS_MULTIPLET') !write these levels before removing splitting
+      WRITE(450,'(a)') &
+       '    #     E       M_orb       M_spin      J_tot       M_tot'
+      DO i=1,nlev_cf
+         atorb=0d0
+         atmag=0d0
+         DO k=1,N_occ(Nat)%n
+            occ = merge(1.d0,0.d0,btest(N_occ(Nat)%st_n(k),arr(0:nso-1)))
+            atmag=atmag+(SUM(occ(1:nlm))-SUM(occ(nlm+1:nso)))*N_occ(Nat)%Hn(k,i)*CONJG(N_occ(Nat)%Hn(k,i))
+            DO kl=1,nlm
+               m=kl-(nlm+1)/2
+               atorb=atorb+m*(occ(kl)+occ(nlm+kl))*N_occ(Nat)%Hn(k,i)*CONJG(N_occ(Nat)%Hn(k,i))
+            ENDDO
+         ENDDO
+         !WRITE(450,*)i,N_occ(Nat)%En(i)
+         WRITE(450,'(i5,F15.8,4f9.5)')i,N_occ(Nat)%En(i),atorb,atmag,atorb+atmag/2d0,atorb+atmag
+      ENDDO
+      CLOSE(450)
+      Eground=N_occ(Nat)%En(1)
+      N_occ(Nat)%En(1:nlev_cf)=Eground
+  ENDIF
+  !END remove splitting
 
   atocc=0d0
   atmag=0d0
@@ -575,7 +607,7 @@ SUBROUTINE add_to_GF_N(GF,Tail,arr,nso,nmom,Nat,Iwmax,num,N_occ,zmsb,Z,Eground,t
               zener=1d0/(zmsb(ie)-N_occ(2)%En(i)+N_occ(1)%En(k))*ecoff
               DO m=1,nso
                  DO m1=1,nso
-                    GF(m,m1,ie)=GF(m,m1,ie)+anmat(m,k,i)*CONJG(anmat(m1,k,i))*zener
+                    GF(m,m1,ie)=GF(m,m1,ie)+anmat(m1,k,i)*CONJG(anmat(m,k,i))*zener
                  ENDDO
               ENDDO
            ENDDO
@@ -584,7 +616,7 @@ SUBROUTINE add_to_GF_N(GF,Tail,arr,nso,nmom,Nat,Iwmax,num,N_occ,zmsb,Z,Eground,t
            do ie=1,nmom   ! number of moments 
               do m=1,nso
                  do m1=1,nso
-                    Tail(ie,m,m1) = Tail(ie,m,m1) + ecoff * anmat(m,k,i)*CONJG(anmat(m1,k,i)) * &
+                    Tail(ie,m,m1) = Tail(ie,m,m1) + ecoff * anmat(m1,k,i)*CONJG(anmat(m,k,i)) * &
                          &(N_occ(2)%En(i)-N_occ(1)%En(k))**(ie-1)
                  enddo
               enddo
@@ -630,7 +662,7 @@ SUBROUTINE add_to_GF_N(GF,Tail,arr,nso,nmom,Nat,Iwmax,num,N_occ,zmsb,Z,Eground,t
               zener=1d0/(zmsb(ie)-N_occ(num)%En(k)+N_occ(num1)%En(i))*ecoff
               DO m=1,nso
                  DO m1=1,nso
-                    GF(m,m1,ie)=GF(m,m1,ie)+CONJG(crmat(m,k,i))*crmat(m1,k,i)*zener
+                    GF(m,m1,ie)=GF(m,m1,ie)+crmat(m,k,i)*CONJG(crmat(m1,k,i))*zener
                  ENDDO
               ENDDO
            ENDDO
@@ -639,7 +671,7 @@ SUBROUTINE add_to_GF_N(GF,Tail,arr,nso,nmom,Nat,Iwmax,num,N_occ,zmsb,Z,Eground,t
            do ie=1,nmom   ! number of moments
               do m=1,nso
                  do m1=1,nso
-                    Tail(ie,m,m1) = Tail(ie,m,m1) + ecoff * CONJG(crmat(m,k,i))*crmat(m1,k,i) * &
+                    Tail(ie,m,m1) = Tail(ie,m,m1) + ecoff * crmat(m,k,i)*CONJG(crmat(m1,k,i)) * &
                          &(N_occ(num)%En(k)-N_occ(num1)%En(i))**(ie-1)
                  enddo
               enddo
