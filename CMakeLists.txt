@@ -61,34 +61,6 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 message(STATUS "-------- BUILD-TYPE: ${CMAKE_BUILD_TYPE} --------")
 
-# Export the list of compile-commands into compile_commands.json
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
-# Global compiler options
-add_compile_options(
-  $<$<CONFIG:Debug>:-Og>
-  $<$<CONFIG:Debug>:-ggdb3>
-)
-
-# Create an Interface target for compiler warnings
-if(NOT TARGET project_warnings)
-  add_library(project_warnings INTERFACE)
-endif()
-install(TARGETS project_warnings EXPORT triqs_hubbardi-targets)
-target_compile_options(project_warnings
-  INTERFACE
-    -Wall
-    -Wextra
-    -Wpedantic
-    -Wno-sign-compare
-    $<$<CXX_COMPILER_ID:GNU>:-Wshadow=local>
-    $<$<CXX_COMPILER_ID:Clang>:-Wshadow>
-    $<$<CXX_COMPILER_ID:Clang>:-Wno-gcc-compat>
-)
-
-# #############
-# Build Project
-
 # Tests
 option(Build_Tests "Build tests" ON)
 if(Build_Tests AND NOT IS_SUBPROJECT)

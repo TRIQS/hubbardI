@@ -6,5 +6,3 @@ install(
     ${CMAKE_CURRENT_BINARY_DIR}/triqs_hubbardi-config-version.cmake
   DESTINATION lib/cmake/triqs_hubbardi
 )
-
-install(EXPORT triqs_hubbardi-targets NAMESPACE triqs_hubbardi:: DESTINATION lib/cmake/triqs_hubbardi)
