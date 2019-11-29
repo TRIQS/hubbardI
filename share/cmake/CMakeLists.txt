@@ -1,10 +1,10 @@
-configure_file(app4triqs-config.cmake.in app4triqs-config.cmake @ONLY)
-configure_file(app4triqs-config-version.cmake.in app4triqs-config-version.cmake @ONLY)
+configure_file(triqs_hubbardi-config.cmake.in triqs_hubbardi-config.cmake @ONLY)
+configure_file(triqs_hubbardi-config-version.cmake.in triqs_hubbardi-config-version.cmake @ONLY)
 install(
   FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/app4triqs-config.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/app4triqs-config-version.cmake
-  DESTINATION lib/cmake/app4triqs
+    ${CMAKE_CURRENT_BINARY_DIR}/triqs_hubbardi-config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/triqs_hubbardi-config-version.cmake
+  DESTINATION lib/cmake/triqs_hubbardi
 )
 
-install(EXPORT app4triqs-targets NAMESPACE app4triqs:: DESTINATION lib/cmake/app4triqs)
+install(EXPORT triqs_hubbardi-targets NAMESPACE triqs_hubbardi:: DESTINATION lib/cmake/triqs_hubbardi)

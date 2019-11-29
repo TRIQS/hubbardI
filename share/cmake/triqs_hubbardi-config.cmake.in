@@ -1,0 +1,24 @@
+# This file allows other CMake Projects to find us
+# We provide general project information
+# and reestablish the exported CMake Targets
+
+# Multiple inclusion guard
+if(NOT TRIQS_HUBBARDI_FOUND)
+set(TRIQS_HUBBARDI_FOUND True)
+
+# version
+set(TRIQS_HUBBARDI_VERSION @PROJECT_VERSION@)
+set(TRIQS_HUBBARDI_GIT_HASH @PROJECT_GIT_HASH@)
+
+# Root of the installation
+set(TRIQS_HUBBARDI_ROOT  @CMAKE_INSTALL_PREFIX@)
+
+# Include the exported targets of this project
+include(@CMAKE_INSTALL_PREFIX@/lib/cmake/triqs_hubbardi/triqs_hubbardi-targets.cmake)
+
+message(STATUS "Found triqs_hubbardi-config.cmake with version @PROJECT_VERSION@, hash = @PROJECT_GIT_HASH@")
+
+# Was the Project built with Documentation?
+set(TRIQS_HUBBARDI_WITH_DOCUMENTATION @Build_Documentation@)
+
+endif()

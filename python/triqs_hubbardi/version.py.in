@@ -3,7 +3,7 @@
 # TRIQS: a Toolbox for Research in Interacting Quantum Systems
 #
 # Copyright (C) 2016-2018, N. Wentzell
-# Copyright (C) 2018-2019, The Simons Foundation
+# Copyright (C) 2018-2019, Simons Foundation
 #   author: N. Wentzell
 #
 # TRIQS is free software: you can redistribute it and/or modify it under the
@@ -21,10 +21,12 @@
 #
 ################################################################################
 
-r"""
-DOC
+version = "@PROJECT_VERSION@"
+triqs_hash = "@TRIQS_GIT_HASH@"
+triqs_hubbardi_hash = "@PROJECT_GIT_HASH@"
 
-"""
-from app4triqs_module import Toto, chain
+def show_version():
+  print "\nYou are using triqs_hubbardi version %s\n"%version
 
-__all__ = ['Toto', 'chain']
+def show_git_hash():
+  print "\nYou are using triqs_hubbardi git hash %s based on triqs git hash %s\n"%(triqs_hubbardi_hash, triqs_hash)
