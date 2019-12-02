@@ -1,51 +1,6 @@
 [![Build Status](https://travis-ci.org/TRIQS/triqs_hubbardi.svg?branch=unstable)](https://travis-ci.org/TRIQS/triqs_hubbardi)
 
-# triqs_hubbardi - A skeleton for a TRIQS application
-
-Initial Setup
--------------
-
-To adapt this skeleton for a new TRIQS application, the following steps are necessary:
-
-* Create a repository, e.g. https://github.com/username/appname
-
-* Run the following commands in order after replacing **appname** accordingly
-
-```bash
-git clone https://github.com/triqs/triqs_hubbardi --branch unstable appname
-cd appname
-./share/squash_history.sh
-./share/replace_and_rename.py appname
-git add -A && git commit -m "Adjust triqs_hubbardi skeleton for appname"
-```
-
-You can now add your github repository and push to it
-
-```bash
-git remote add origin https://github.com/username/appname
-git remote update
-git push origin unstable
-```
-
-If you prefer to use the [SSH interface](https://help.github.com/en/articles/connecting-to-github-with-ssh)
-to the remote repository, replace the http link with e.g. `git@github.com:username/appname`.
-
-### Merging triqs_hubbardi skeleton updates ###
-
-You can merge future changes to the triqs_hubbardi skeleton into your project with the following commands
-
-```bash
-git remote update
-git merge triqs_hubbardi_remote/unstable -m "Merge latest triqs_hubbardi skeleton changes"
-```
-
-If you should encounter any conflicts resolve them and `git commit`.
-Finally we repeat the replace and rename command from the initial setup.
-
-```bash
-./share/replace_and_rename.py appname
-git commit --amend
-```
+# triqs_hubbardi - A Hubbard-I solver based on triqs atom_diag
 
 Getting Started
 ---------------

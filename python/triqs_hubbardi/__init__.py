@@ -25,6 +25,6 @@ r"""
 DOC
 
 """
-from triqs_hubbardi_module import Toto, chain
+from solver import *
 
-__all__ = ['Toto', 'chain']
+__all__ = ['Solver']

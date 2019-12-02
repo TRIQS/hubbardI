@@ -26,11 +26,11 @@ endif()
 
 # ############
 # Define Project
-project(TRIQS_HUBBARDI VERSION 2.2.0 LANGUAGES C CXX)
+project(TRIQS_HUBBARDI VERSION 2.1.0 LANGUAGES C CXX)
 
 # ############
 # Load TRIQS and CPP2PY
-find_package(TRIQS 2.2 REQUIRED)
+find_package(TRIQS 2.1 REQUIRED)
 find_package(Cpp2Py 1.6 REQUIRED)
 
 # Get the git hash & print status
@@ -87,9 +87,6 @@ target_compile_options(project_warnings
 
 # #############
 # Build Project
-
-# Build and install the triqs_hubbardi library
-add_subdirectory(c++/triqs_hubbardi)
 
 # Tests
 option(Build_Tests "Build tests" ON)
