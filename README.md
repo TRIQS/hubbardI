@@ -2,33 +2,36 @@
 
 # triqs_hubbardi - A Hubbard-I solver based on triqs atom_diag
 
-Getting Started
----------------
 
-After setting up your application as described above you should customize the following files and directories
-according to your needs (replace triqs_hubbardi in the following by the name of your application)
+This application implements the Hubbard-I solver in pytriqs using the lightweight diagonalization routine which come with triqs/atom_diag.
 
-* Adjust or remove the `README.md` and `doc/ChangeLog.md` file
-* In the `c++/triqs_hubbardi` subdirectory adjust the example files `triqs_hubbardi.hpp` and `triqs_hubbardi.cpp` or add your own source files.
-* In the `test/c++` subdirectory adjust the example test `basic.cpp` or add your own tests.
-* In the `python/triqs_hubbardi` subdirectory add your Python source files.
-  Be sure to remove the `triqs_hubbardi_module_desc.py` file unless you want to generate a Python module from your C++ source code.
-* In the `test/python` subdirectory adjust the example test `Basic.py` or add your own tests.
-* Adjust any documentation examples given as `*.rst` files in the doc directory.
-* Adjust the sphinx configuration in `doc/conf.py.in` as necessary.
-* The build and install process is identical to the one outline [here](https://triqs.github.io/triqs_hubbardi/unstable/install.html).
+### Usage ###
+The Solver comes with the same usage as, e.g., the [cthyb solver](https://triqs.github.io/cthyb/latest/index.html).
 
-### Optional ###
+After constructing the impurity solver instance by
+```python
+S = Solver(beta = beta, gf_struct)
+```
+and initializing the non_interacting Green's function
+```python
+G.G0_iw = ...
+```
+we can solve the impurity problem by
+```python
+S.solve(h_int=h_int)
+```
+With optional parameters in the `solve` function like `calc_gtau=True` and `calc_gw=True` the solver also calculates the interacting Green's function on the real axis and imaginary time. For the real and Matsubara axis, also the self energy is calculated.
+
+### Installation ###
 ----------------
 
-* If you want to wrap C++ classes and/or functions provided in the `c++/triqs_hubbardi/triqs_hubbardi.hpp` rerun the `c++2py` tool with
+The only thing you need is a working triqs installation. If you have sourced the triqsvars.sh file everything works automatically.
+
 ```bash
-c++2py -r triqs_hubbardi_module_desc.py
-```
-* Add your email address to the bottom section of `Jenkinsfile` for Jenkins CI notification emails
-```
-End of build log:
-\${BUILD_LOG,maxLines=60}
-    """,
-    to: 'user@domain.org',
+git clone https://github.com/malte-schueler/triqs_hubbardI triqs_hubbardI.src
+mkdir cthyb.build && cd cthyb.build
+cmake ../cthyb.src
+make
+make test
+make install
 ```
