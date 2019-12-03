@@ -20,7 +20,13 @@ we can solve the impurity problem by
 ```python
 S.solve(h_int = h_int)
 ```
-With optional parameters in the `solve` function like `calc_gtau = True` and `calc_gw = True` the solver also calculates the interacting Green's function on the real axis and imaginary time. For the real and Matsubara axis, also the self energy is calculated.
+With optional parameters in the `solve` function `calc_gtau = True` and `calc_gw = True` the solver also additionally calculates the interacting Green's function on the real axis and imaginary time. For the real and Matsubara axis, also the self energy is calculated.
+
+The mesh for the Green function is defined in the first step, e.g., by 
+```python
+Solver(beta = beta, gf_struct, n_iw= 512, n_tau = 200, n_w = 1001, w_min=-10, w_max=10, idelta=0.1)
+```
+where `n_w, w_min, w_max, idelta` define the real axis and broadening by an imaginary offset.
 
 ### Installation ###
 ----------------
