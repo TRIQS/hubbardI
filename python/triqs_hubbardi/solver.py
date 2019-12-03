@@ -111,7 +111,7 @@ class Solver():
             
         for block, ind in self.gf_struct:
             a = Delta_iw[block].fit_tail()
-            self.eal[block] = a[0][0].real                
+            self.eal[block] = a[0][0]               
                 
         G0_iw_F = 0*self.G_iw
         if calc_gw:
