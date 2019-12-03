@@ -35,8 +35,8 @@ The only thing you need is a working triqs installation. If you have sourced the
 
 ```bash
 git clone https://github.com/malte-schueler/triqs_hubbardI triqs_hubbardI.src
-mkdir cthyb.build && cd cthyb.build
-cmake ../cthyb.src
+mkdir triqs_hubbardI.build && cd triqs_hubbardI.build
+cmake ../triqs_hubbardI.src
 make
 make test
 make install

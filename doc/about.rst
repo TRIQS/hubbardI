@@ -3,6 +3,6 @@
 About triqs_hubbardi
 ===============
 
-An example application using ``cpp2py`` and TRIQS.
+An application using TRIQS to implement a Hubbard-I solver, i.e., the impurity problem is approximatied by an atomix problem by neglecting the hybridization completely.
 
-Written and maintained by N. Wentzell with contributions from H. U.R. Strand.
+Written and maintained by M. Schueler.

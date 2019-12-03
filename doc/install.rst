@@ -49,7 +49,7 @@ To use a particular version, go into the directory with the sources, and look at
 
 Checkout the version of the code that you want::
 
-     $ git checkout 2.1.0
+     $ git checkout 2.2.0
 
 and follow steps 2 to 4 above to compile the code.
 

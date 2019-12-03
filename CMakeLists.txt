@@ -26,7 +26,7 @@ endif()
 
 # ############
 # Define Project
-project(TRIQS_HUBBARDI VERSION 2.1.0 LANGUAGES C CXX)
+project(TRIQS_HUBBARDI VERSION 2.2.0 LANGUAGES C CXX)
 
 # ############
 # Load TRIQS and CPP2PY

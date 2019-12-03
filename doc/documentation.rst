@@ -3,11 +3,8 @@
 Documentation
 =============
 
+The Hubbard-I solver approximates the solution of the impurity model by neglecting any hybiridization and solcing an atomic problem. The atomic problem is defined by the local interaction Hamiltonian and the orbital dependent high-frequency behavior of the non-interacting bath Green's function.
 
-.. math::
-
-   (a + b)^2  &=  (a + b)(a + b) \\
-              &=  a^2 + 2ab + b^2
 
 Table of Contents
 -----------------
@@ -21,21 +18,13 @@ Table of Contents
    changelog
    about
 
-C++ reference manual
---------------------
-
-.. toctree::
-   :maxdepth: 5
-
-   cpp2rst_generated/contents
-
 Python reference manual
 -----------------------
 
 .. automodule:: triqs_hubbardi 
    :members:
 
-.. autoclass:: triqs_hubbardi.triqs_hubbardi_module.Toto
+.. autoclass:: triqs_hubbardi.Solver
    :members:
 
-.. autofunction:: triqs_hubbardi.triqs_hubbardi_module.chain
+.. autofunction:: triqs_hubbardi.Solver.solve
