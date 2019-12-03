@@ -18,14 +18,14 @@ G.G0_iw = ...
 ```
 we can solve the impurity problem by
 ```python
-S.solve(h_int=h_int)
+S.solve(h_int = h_int)
 ```
-With optional parameters in the `solve` function like `calc_gtau=True` and `calc_gw=True` the solver also calculates the interacting Green's function on the real axis and imaginary time. For the real and Matsubara axis, also the self energy is calculated.
+With optional parameters in the `solve` function like `calc_gtau = True` and `calc_gw = True` the solver also calculates the interacting Green's function on the real axis and imaginary time. For the real and Matsubara axis, also the self energy is calculated.
 
 ### Installation ###
 ----------------
 
-The only thing you need is a working triqs installation. If you have sourced the triqsvars.sh file everything works automatically.
+The only thing you need is a working triqs installation. If you have sourced the `triqsvars.sh` file everything works automatically.
 
 ```bash
 git clone https://github.com/malte-schueler/triqs_hubbardI triqs_hubbardI.src
