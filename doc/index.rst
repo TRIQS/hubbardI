@@ -8,10 +8,7 @@ triqs_hubbardi
    This is the homepage of triqs_hubbardi v2.2.0.
    For changes see the :ref:`changelog page <changelog>`.
 
-An example application using cpp2py and :ref:`TRIQS <triqslibs:welcome>`.
-
-This documentation is generated based on `rst <https://de.wikipedia.org/wiki/ReStructuredText>`_ files
-and the comments in the sources and headers.
+An application using :ref:`TRIQS <triqslibs:welcome>` to implement a Hubbard-I solver
 
 Learn how to use triqs_hubbardi in the :ref:`documentation`.
 
