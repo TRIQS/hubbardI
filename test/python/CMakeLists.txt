@@ -5,7 +5,7 @@ foreach(file ${all_h5_ref_files})
 endforeach()
 
 # List of all tests
-set(all_tests single_band_gtau single_band_gw single_band_giw multi_orbital hubbard_5orb)
+set(all_tests single_band_gtau single_band_gw single_band_giw single_band_gl multi_orbital hubbard_5orb)
 
 foreach(test ${all_tests})
   get_filename_component(test_name ${test} NAME_WE)

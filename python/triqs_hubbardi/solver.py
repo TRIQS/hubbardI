@@ -6,7 +6,7 @@ from pytriqs.operators import Operator, c, c_dag, n
 
 class Solver():
     
-    def __init__(self, beta, gf_struct, n_iw=1025, n_tau=10001, n_w=500,w_min=-15,w_max=15,idelta=0.01):
+    def __init__(self, beta, gf_struct, n_iw=1025, n_tau=10001, n_l=30, n_w=500,w_min=-15,w_max=15,idelta=0.01):
         """
         Initialise the solver.
         Parameters
@@ -32,16 +32,19 @@ class Solver():
         g_w_list = []
         g_iw_list = []
         g_tau_list = []
+        g_l_list = []
 
         name_list = [block for block, ind in gf_struct]
         for block, ind in gf_struct:
             g_w_list.append(GfReFreq(indices = ind, window = (w_min, w_max), n_points = n_w))
             g_iw_list.append(GfImFreq(indices = ind, beta = beta, n_points = n_iw))
             g_tau_list.append(GfImTime(indices = ind, beta = beta, n_points = n_tau))
+            g_l_list.append(GfLegendre(indices = ind, beta = beta, n_points = n_l))
             
         self.G0_w = BlockGf(name_list = name_list, block_list = g_w_list)
         self.G0_iw = BlockGf(name_list = name_list, block_list = g_iw_list)
         self.G_tau = BlockGf(name_list = name_list, block_list = g_tau_list)        
+        self.G_l = BlockGf(name_list = name_list, block_list = g_l_list)
         
         self.Sigma_iw = self.G0_iw.copy()
         self.Sigma_iw.zero()
@@ -59,6 +62,7 @@ class Solver():
         
         self.n_iw = n_iw
         self.n_tau = n_tau
+        self.n_l = n_l
         self.beta = beta
         
         self.n_w = n_w
@@ -77,7 +81,7 @@ class Solver():
         
     def solve(self, **params_kw):
         """
-        Solve the impurity problem: calculate G(iw), G(w), Sigma(iw), and Sigma(w)
+        Solve the impurity problem: calculate G(iw) and Sigma(iw)
         Parameters
         ----------
         params_kw : dict {'param':value} that is passed to the core solver.
@@ -86,6 +90,8 @@ class Solver():
                         * `n_cycles` (int): number of measurements to be made.
                     Other parameters are 
                         * `calc_gtau` (bool): calculate G(tau)
+                        * `calc_gw` (bool): calculate G(w) and Sigma(w)
+                        * `calc_gl` (bool): calculate G(legendre)
 
         
         """
@@ -103,6 +109,11 @@ class Solver():
             calc_gw = params_kw['calc_gw']
         except KeyError:
             calc_gw = False
+
+        try:
+            calc_gl = params_kw['calc_gl']
+        except KeyError:
+            calc_gl = False
             
         Delta_iw = 0*self.G0_iw
         Delta_iw << iOmega_n
@@ -143,6 +154,8 @@ class Solver():
             self.G_w = atomic_g_w(ad, self.beta, self.gf_struct, (self.w_min,self.w_max), self.n_w, self.idelta)
         if calc_gtau:
             self.G_tau = atomic_g_tau(ad, self.beta, self.gf_struct, self.n_tau )
+        if calc_gl:
+            self.G_l = atomic_g_l(ad, self.beta, self.gf_struct, self.n_l )
         
         self.Sigma_iw = inverse(G0_iw_F) - inverse(self.G_iw)
         if calc_gw:
