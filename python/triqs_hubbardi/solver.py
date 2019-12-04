@@ -92,6 +92,7 @@ class Solver():
                         * `calc_gtau` (bool): calculate G(tau)
                         * `calc_gw` (bool): calculate G(w) and Sigma(w)
                         * `calc_gl` (bool): calculate G(legendre)
+                        * `calc_dm` (bool): calculate density matrix
 
         
         """
@@ -114,6 +115,11 @@ class Solver():
             calc_gl = params_kw['calc_gl']
         except KeyError:
             calc_gl = False
+
+        try:
+            calc_dm = params_kw['calc_dm']
+        except KeyError:
+            calc_dm = False
             
         Delta_iw = 0*self.G0_iw
         Delta_iw << iOmega_n
@@ -147,16 +153,18 @@ class Solver():
                 for jj,jj_ind in enumerate(ind):
                     H_loc += self.eal[block][ii,jj]*c_dag(block,ii_ind)*c(block,jj_ind)
 
-        ad = AtomDiag(H_loc, self.fops)
+        self.ad = AtomDiag(H_loc, self.fops)
         
-        self.G_iw = atomic_g_iw(ad, self.beta, self.gf_struct, self.n_iw )
+        self.G_iw = atomic_g_iw(self.ad, self.beta, self.gf_struct, self.n_iw )
         if calc_gw:
-            self.G_w = atomic_g_w(ad, self.beta, self.gf_struct, (self.w_min,self.w_max), self.n_w, self.idelta)
+            self.G_w = atomic_g_w(self.ad, self.beta, self.gf_struct, (self.w_min,self.w_max), self.n_w, self.idelta)
         if calc_gtau:
-            self.G_tau = atomic_g_tau(ad, self.beta, self.gf_struct, self.n_tau )
+            self.G_tau = atomic_g_tau(self.ad, self.beta, self.gf_struct, self.n_tau )
         if calc_gl:
-            self.G_l = atomic_g_l(ad, self.beta, self.gf_struct, self.n_l )
-        
+            self.G_l = atomic_g_l(self.ad, self.beta, self.gf_struct, self.n_l )
+        if calc_dm:
+            self.dm = atomic_density_matrix(self.ad, self.beta)
+
         self.Sigma_iw = inverse(G0_iw_F) - inverse(self.G_iw)
         if calc_gw:
             self.Sigma_w = inverse(G0_w_F) - inverse(self.G_w)
