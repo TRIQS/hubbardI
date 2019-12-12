@@ -40,3 +40,23 @@ with HDFArchive("bethe5.h5",'w') as A:
 with HDFArchive("bethe5.ref.h5",'r') as A:
     Giw_read = A["G_iw"]
 h5diff('bethe5.h5', 'bethe5.ref.h5')
+
+
+
+# this can be reproduced with the triqs 1.4 Hubbard-I  solver with the following script:
+
+#from pytriqs.applications.impurity_solvers.hubbard_I import Solver
+#import numpy
+
+
+
+#S = Solver(beta = 40, l=2)
+#eal={}
+#eal['up'] = -25.0*numpy.identity(5)
+#eal['down'] = -25.0*numpy.identity(5)
+#S.set_atomic_levels(eal=eal)
+
+#S.solve(U_int = 4.0, J_hund=1.0)
+
+# # S.G then contains the greens function on matsubara, such that
+# the S.G form here is equal to S.G_iw from above
