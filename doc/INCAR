@@ -1,0 +1,15 @@
+SYSTEM   = Ce
+
+#ICHARG = 5
+#NELM = 30
+#ISMEAR = -1; SIGMA = 0.2;
+ISMEAR = -5
+#EDIFF = 1E-6                           # high precision for groundstate calculation
+NEDOS = 3000
+#NELECT = 32
+LORBIT = 14
+EMIN = 0
+EMAX = 14
+NBANDS = 20
+LOCPROJ = 1 : f : Pr 1
+ISYM = -1

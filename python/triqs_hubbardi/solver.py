@@ -5,10 +5,13 @@ import numpy as np
 from pytriqs.operators import Operator, c, c_dag, n
 
 class Solver():
-    
+    """Class providing initialization and solve function. Contains all relevant Greensfunctions and self energy."""
+
     def __init__(self, beta, gf_struct, n_iw=1025, n_tau=10001, n_l=30, n_w=500,w_min=-15,w_max=15,idelta=0.01):
         """
+
         Initialise the solver.
+
         Parameters
         ----------
         beta : scalar
@@ -22,8 +25,21 @@ class Solver():
         n_iw : integer, optional
                Number of Matsubara frequencies used for the Green's functions.
         n_tau : integer, optional
-               Number of imaginary time points used for the Green's functions.
+                Number of imaginary time points used for the Green's functions.
+        n_l : integer, optional
+                Number of legendre polynomials used for the Green's functions.
+        n_w : integer, optional
+                Number of real frequency points used for the Green's functions.
+        w_min : integer, optional
+                Lower limit of the range of real frequencies
+        w_max : integer, optional
+                Upper limit of the range of real frequencies
+        idelta : float, optional
+                Broadening of Green's function on real frequencies
+
         """
+
+
         
         if isinstance(gf_struct,dict):
             print "WARNING: gf_struct should be a list of pairs [ (str,[int,...]), ...], not a dict"
@@ -82,19 +98,18 @@ class Solver():
     def solve(self, **params_kw):
         """
         Solve the impurity problem: calculate G(iw) and Sigma(iw)
+
         Parameters
         ----------
         params_kw : dict {'param':value} that is passed to the core solver.
-                     Two required :ref:`parameters <solve_parameters>` are
+                    Only required :ref:`parameter <solve_parameters>` is
                         * `h_int` (:ref:`Operator object <triqslibs:operators>`): the local Hamiltonian of the impurity problem to be solved,
-                        * `n_cycles` (int): number of measurements to be made.
                     Other parameters are 
                         * `calc_gtau` (bool): calculate G(tau)
                         * `calc_gw` (bool): calculate G(w) and Sigma(w)
                         * `calc_gl` (bool): calculate G(legendre)
                         * `calc_dm` (bool): calculate density matrix
 
-        
         """
 
         

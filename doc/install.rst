@@ -3,17 +3,17 @@
 .. _install:
 
 Compiling triqs_hubbardi from source
-===============================
+=====================================
 
 
 Prerequisites
--------------
+----------------
 
 #. The :ref:`TRIQS <triqslibs:welcome>` library, see :ref:`TRIQS installation instruction <triqslibs:installation>`.
    In the following, we assume that TRIQS is installed in the directory ``path_to_triqs``.
 
 Installation steps
-------------------
+---------------------
 
 #. Download the source code of the latest stable version by cloning the ``TRIQS/triqs_hubbardi`` repository from GitHub::
 
@@ -37,7 +37,7 @@ Installation steps
      $ make install
 
 Version compatibility
----------------------
+-----------------------
 
 Keep in mind that the version of ``triqs_hubbardi`` must be compatible with your TRIQS library version,
 see :ref:`TRIQS website <triqslibs:versions>`.
@@ -53,7 +53,7 @@ Checkout the version of the code that you want::
 and follow steps 2 to 4 above to compile the code.
 
 Custom CMake options
---------------------
+----------------------
 
 The compilation of ``triqs_hubbardi`` can be configured using CMake-options::
 
@@ -62,7 +62,7 @@ The compilation of ``triqs_hubbardi`` can be configured using CMake-options::
 +-----------------------------------------------------------------+-----------------------------------------------+
 | Options                                                         | Syntax                                        |
 +=================================================================+===============================================+
-| Specify an installation path other than path_to_triqs           | -DCMAKE_INSTALL_PREFIX=path_to_triqs_hubbardi      |
+| Specify an installation path other than path_to_triqs           | -DCMAKE_INSTALL_PREFIX=path_to_triqs_hubbardi |
 +-----------------------------------------------------------------+-----------------------------------------------+
 | Build in Debugging Mode                                         | -DCMAKE_BUILD_TYPE=Debug                      |
 +-----------------------------------------------------------------+-----------------------------------------------+

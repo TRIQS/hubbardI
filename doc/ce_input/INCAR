@@ -1,0 +1,10 @@
+SYSTEM   = Ce
+
+ISMEAR = -5
+NEDOS = 3000
+LORBIT = 14
+EMIN = 0
+EMAX = 14
+NBANDS = 20
+LOCPROJ = 1 : f : Pr 1
+ISYM = -1
