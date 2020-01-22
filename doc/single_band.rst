@@ -50,4 +50,4 @@ which should result in something like this:
 
 .. image:: solution_anderson.png
 
-The Green funtion is actually quite close to the cthyb result (compare the equivalent example in the documentation of the `ctyhb app <https://triqs.github.io/cthyb/latest/guide/aim.html>`_). The spectral function shows peaks at the atomic energies at plus and minus U/2. 
+The Green function is actually quite close to the cthyb result (compare the equivalent example in the documentation of the `ctyhb app <https://triqs.github.io/cthyb/latest/guide/aim.html>`_). The spectral function shows peaks at the atomic energies at plus and minus U/2. 

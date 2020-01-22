@@ -15,7 +15,7 @@ If you are moving from 1.4 to 2.2 this might help: The parts of a script in vers
 	# set the atomic levels explicitly by matrix eal
 	S.set_atomic_levels( eal )
 
-	# solve and specify the interaction via U and J paramters
+	# solve and specify the interaction via U and J parameters
 	S.solve( U_int, J_hund )
 
 transitions to the following in version 2.2
@@ -34,10 +34,14 @@ transitions to the following in version 2.2
 	# set the non-interacting Green's function
 	S.G0_iw << inverse( S.Sigma_iw + inverse( S.G_iw ) )
 
-	# Solve the impurity problem specifiying the interaction Hamiltonian
+	# Solve the impurity problem specifying the interaction Hamiltonian
 	# the atomic levels are automatically set by the high frequency behavior of S.G0_iw
 	S.solve( h_int = H )
 
+
+We can see two main changes:
+	* The interaction in version 1.4 is given in terms of ``U_int`` and ``J_hund`` while it is given in terms of an arbitrary interaction Hamiltonian in version 2.2.
+	* The atomic levels are set explicitly via ``eal`` in version 1.4 while they are extracted automatically from the non-interacting Green's function ``S.G0_iw`` in version 2.2.
 For a more detailed comparison compare the Ce example in the tutorial section of the dft_tools app and the Ce example in the example section here: :ref:`ce`
 
 Version 1.4

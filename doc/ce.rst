@@ -5,7 +5,7 @@ DFT+DMFT example for Ce with VASP
 
 Here we perform a DFT+DMFT calculation for Ce in its high temperature gamma phase, as discussed, e.g., in references `[1] <https://doi.org/10.1088/0953-8984/24/7/075604>`_ and as a tutorial in dft_tools for charge self consistent DFT+DMFT calculations with Wien2K and the old Hubbard-I version 1.4. For simplicity, we do no charge self-consistency. We rely on DFT calculations done with VASP and the VASP interface to triqs implemented in the `dft_tools app <https://triqs.github.io/dft_tools/latest/index.html>`_. For all DFT related details have a look in the detailed documentation of dft_tools and especially the VASP interface.
 
-We perform a VASP caluculation with input files :ref:`INCAR`, :ref:`KPOINTS`, :ref:`POSCAR`, and an appropriate `POTCAR`. Non standard flags in the `INCAR` are::
+We perform a VASP calculation with input files :ref:`INCAR`, :ref:`KPOINTS`, :ref:`POSCAR`, and an appropriate `POTCAR`. Non standard flags in the `INCAR` are::
 
   LORBIT = 14
   EMIN = 0
@@ -13,7 +13,7 @@ We perform a VASP caluculation with input files :ref:`INCAR`, :ref:`KPOINTS`, :r
   LOCPROJ = 1 : f : Pr 1
   ISYM = -1
   
-These select a special way of calculating projectors which optimze the overlap of bands in an enegry window (`EMIN` and `EMAX`) and the Ce f states. We also switch off all symmetries (`ISYM=-1`).
+These select a special way of calculating projectors which optimize the overlap of bands in an energy window (`EMIN` and `EMAX`) and the Ce f states. We also switch off all symmetries (`ISYM=-1`).
 
 After executing `VASP` we orthonormalize the raw projectors in the VASP output using `plovasp` and a corresponding input file :download:`plo.cfg <ce_input/plo.cfg>` which selects the correlated subspace and an energy window in which the orthonormalization is done::
 
@@ -27,7 +27,7 @@ We can finally perform the dmft loop using a quite plain setup as implemented in
 
   python ce.py
 
-For each iteration we calculate the self energy on Matsubara frequenices and the real axis by the `calc_gw` flag::
+For each iteration we calculate the self energy on Matsubara frequencies and the real axis by the `calc_gw` flag::
 
   S.solve(h_int = H, calc_gw=True )
   
