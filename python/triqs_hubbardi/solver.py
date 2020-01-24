@@ -102,7 +102,7 @@ class Solver():
         Parameters
         ----------
         params_kw : dict {'param':value} that is passed to the core solver.
-                    Only required :ref:`parameter <solve_parameters>` is
+                    Only required parameter is
                         * `h_int` (:ref:`Operator object <triqslibs:operators>`): the local Hamiltonian of the impurity problem to be solved,
                     Other parameters are 
                         * `calc_gtau` (bool): calculate G(tau)
@@ -183,3 +183,40 @@ class Solver():
         self.Sigma_iw = inverse(G0_iw_F) - inverse(self.G_iw)
         if calc_gw:
             self.Sigma_w = inverse(G0_w_F) - inverse(self.G_w)
+
+
+
+
+    def __reduce_to_dict__(self):
+       return {'G0_w': self.G0_w, 'G0_iw': self.G0_iw,'G_tau': self.G_tau,
+               'G_l': self.G_l, 'Sigma_iw': self.Sigma_iw, 'G_iw': self.G_iw,
+               'Sigma_w': self.Sigma_w, 'G_w': self.G_w,
+               'gf_struct': self.gf_struct, 'n_iw': self.n_iw, 'n_w': self.n_w,
+               'n_tau': self.n_tau, 'n_l': self.n_l,'beta': self.beta,
+               'w_min': self.w_min,'w_max': self.w_max,'ad':self.ad,
+               'idelta': self.idelta,'fops': self.fops,'eal':self.eal}
+
+    @classmethod
+    def __factory_from_dict__(cls,name,D) :
+       
+        instance = cls(D['beta'], D['gf_struct'], D['n_iw'], D['n_tau'],
+                       D['n_l'], D['n_w'], D['w_min'], D['w_max'], D['idelta'])
+                      
+        instance.G0_w = D['G0_w'] 
+        instance.G0_iw = D['G0_iw'] 
+        instance.G_tau = D['G_tau'] 
+        instance.G_l = D['G_l'] 
+        instance.Sigma_iw = D['Sigma_iw'] 
+        instance.G_iw = D['G_iw'] 
+        instance.Sigma_w = D['Sigma_w'] 
+        instance.G_w = D['G_w'] 
+        instance.gf_struct = D['gf_struct'] 
+        instance.fops = D['fops'] 
+        instance.eal = D['eal']
+        instance.ad = D['ad']
+       
+        return instance
+    
+# registering my class                                                                                
+from pytriqs.archive.hdf_archive_schemes import register_class
+register_class (Solver)
