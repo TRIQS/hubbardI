@@ -13,7 +13,7 @@ set(TRIQS_HUBBARDI_GIT_HASH @PROJECT_GIT_HASH@)
 # Root of the installation
 set(TRIQS_HUBBARDI_ROOT  @CMAKE_INSTALL_PREFIX@)
 
-message(STATUS "Found triqs_hubbardi-config.cmake with version @PROJECT_VERSION@, hash = @PROJECT_GIT_HASH@")
+message(STATUS "Found triqs_hubbardI-config.cmake with version @PROJECT_VERSION@, hash = @PROJECT_GIT_HASH@")
 
 # Was the Project built with Documentation?
 set(TRIQS_HUBBARDI_WITH_DOCUMENTATION @Build_Documentation@)

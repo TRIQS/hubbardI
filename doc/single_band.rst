@@ -7,7 +7,7 @@ Here is the implementation for an Anderson impurity model with a flat (Wilson) h
 
 .. code-block:: python
 
-   from triqs_hubbardi import *
+   from triqs_hubbardI import *
    from pytriqs.archive import *
    from pytriqs.gf import *
    from pytriqs.operators import *

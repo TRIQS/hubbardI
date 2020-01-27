@@ -1,3 +1,23 @@
+###############################################################################
+#
+# hubbardI: A TRIQS based hubbardI solver
+#
+# Copyright (c) 2020 Malte Schueler
+#
+# hubbardI is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# hubbardI is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along with
+# hubbardI. If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 from itertools import *
 import numpy as np
 import pytriqs.utility.mpi as mpi
@@ -9,8 +29,8 @@ from triqs_dft_tools.sumk_dft_tools import *
 from pytriqs.operators.util.hamiltonians import *
 from pytriqs.operators.util.U_matrix import *
 import triqs_dft_tools.version as dft_tools_version
-from triqs_hubbardi import *
-import triqs_hubbardi.version as hubbardI_version
+from triqs_hubbardI import *
+import triqs_hubbardI.version as hubbardI_version
 
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)

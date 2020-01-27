@@ -21,7 +21,7 @@ Table of Contents
 Python reference manual
 -----------------------
 
-.. autoclass:: triqs_hubbardi.Solver
+.. autoclass:: triqs_hubbardI.Solver
    :members:
    :special-members: __init__
    :member-order: bysource
