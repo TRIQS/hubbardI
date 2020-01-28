@@ -34,7 +34,7 @@ where `n_w, w_min, w_max, idelta` define the real axis and broadening by an imag
 The only thing you need is a working triqs installation. If you have sourced the `triqsvars.sh` file everything works automatically.
 
 ```bash
-git clone https://github.com/malte-schueler/hubbardI hubbardI.src
+git clone https://github.com/TRIQS/hubbardI hubbardI.src
 mkdir hubbardI.build && cd hubbardI.build
 cmake ../hubbardI.src
 make
