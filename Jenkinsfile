@@ -75,7 +75,7 @@ for (int i = 0; i < osxPlatforms.size(); i++) {
         /* note: this is installing into the parent (triqs) venv (install dir), which is thus shared among apps and so not be completely safe */
         sh "pip install -r $srcDir/requirements.txt"
         sh "cmake $srcDir -DCMAKE_INSTALL_PREFIX=$installDir -DTRIQS_ROOT=$triqsDir"
-        sh "make -j3"
+        sh "make -j2"
         try {
           sh "make test CTEST_OUTPUT_ON_FAILURE=1"
         } catch (exc) {
@@ -96,7 +96,7 @@ try {
     stage("publish") { timeout(time: 5, unit: 'MINUTES') {
       def commit = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
       def release = env.BRANCH_NAME == "master" || env.BRANCH_NAME == "unstable" || sh(returnStdout: true, script: "git describe --exact-match HEAD || true").trim()
-      def workDir = pwd()
+      def workDir = pwd(tmp:true)
       lock('triqs_publish') {
       /* Update documention on gh-pages branch */
       dir("$workDir/gh-pages") {
