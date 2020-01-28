@@ -3,8 +3,8 @@
 # hubbardI: A TRIQS based hubbardI solver
 #
 # Copyright (c) 2019-2020 Malte Schueler
-# Copyright (c) 2019-2020 The Simons foundation
-#   authors: N. Wentzell
+# Copyright (c) 2019-2020 The Simons Foundation
+# 	author: N. Wentzell
 #
 # hubbardI is free software: you can redistribute it and/or modify it under the
 # terms of the GNU General Public License as published by the Free Software
@@ -20,24 +20,15 @@
 # hubbardI. If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# Generate the sphinx config file
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/conf.py.in ${CMAKE_CURRENT_BINARY_DIR}/conf.py @ONLY)
+# Configure the version
+configure_file(version.py.in version.py)
 
-# ---------------------------------
-# Top Sphinx target
-# ---------------------------------
-# Sphinx has internal caching, always run it
-add_custom_target(docs_sphinx ALL)
-add_custom_command(
-  TARGET docs_sphinx
-  COMMAND PYTHONPATH=${PROJECT_BINARY_DIR}/python:$ENV{PYTHONPATH} ${TRIQS_SPHINXBUILD_EXECUTABLE} -c . -j8 -b html ${CMAKE_CURRENT_SOURCE_DIR} html
-)
+# All Python files. Copy them in the build dir to have a complete package for the tests.
+file(GLOB_RECURSE python_sources RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.py)
+foreach(file ${python_sources})
+  configure_file(${file} ${file} COPYONLY)
+endforeach()
 
-# ---------------------------------
-# Install
-# ---------------------------------
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/ COMPONENT documentation DESTINATION share/doc/triqs_hubbardI
-  FILES_MATCHING
-  REGEX "\\.(html|pdf|png|gif|jpg|svg|js|xsl|css|py|txt|inv|bib|cfg)$"
-  PATTERN "_*"
-)
+# Install python modules to proper location
+set(PYTHON_LIB_DEST ${TRIQS_PYTHON_LIB_DEST_ROOT}/triqs_hubbardI)
+install(FILES ${python_sources} ${CMAKE_CURRENT_BINARY_DIR}/version.py DESTINATION ${PYTHON_LIB_DEST})

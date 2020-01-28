@@ -2,7 +2,7 @@
 
 .. _install:
 
-Compiling triqs_hubbardi from source
+Compiling triqs_hubbardI from source
 =====================================
 
 
@@ -15,13 +15,13 @@ Prerequisites
 Installation steps
 ---------------------
 
-#. Download the source code of the latest stable version by cloning the ``TRIQS/triqs_hubbardi`` repository from GitHub::
+#. Download the source code of the latest stable version by cloning the ``TRIQS/triqs_hubbardI`` repository from GitHub::
 
-     $ git clone https://github.com/TRIQS/triqs_hubbardi triqs_hubbardi.src
+     $ git clone https://github.com/TRIQS/triqs_hubbardI triqs_hubbardI.src
 
 #. Create and move to a new directory where you will compile the code::
 
-     $ mkdir triqs_hubbardi.build && cd triqs_hubbardi.build
+     $ mkdir triqs_hubbardI.build && cd triqs_hubbardI.build
 
 #. Ensure that your shell contains the TRIQS environment variables by sourcing the ``triqsvars.sh`` file from your TRIQS installation::
 
@@ -29,7 +29,7 @@ Installation steps
 
 #. In the build directory call cmake, including any additional custom CMake options, see below::
 
-     $ cmake ../triqs_hubbardi.src
+     $ cmake ../triqs_hubbardI.src
 
 #. Compile the code, run the tests and install the application::
 
@@ -39,12 +39,12 @@ Installation steps
 Version compatibility
 -----------------------
 
-Keep in mind that the version of ``triqs_hubbardi`` must be compatible with your TRIQS library version,
+Keep in mind that the version of ``triqs_hubbardI`` must be compatible with your TRIQS library version,
 see :ref:`TRIQS website <triqslibs:versions>`.
 In particular the Major and Minor Version numbers have to be the same.
 To use a particular version, go into the directory with the sources, and look at all available versions::
 
-     $ cd triqs_hubbardi.src && git tag
+     $ cd triqs_hubbardI.src && git tag
 
 Checkout the version of the code that you want::
 
@@ -55,14 +55,14 @@ and follow steps 2 to 4 above to compile the code.
 Custom CMake options
 ----------------------
 
-The compilation of ``triqs_hubbardi`` can be configured using CMake-options::
+The compilation of ``triqs_hubbardI`` can be configured using CMake-options::
 
-    cmake ../triqs_hubbardi.src -DOPTION1=value1 -DOPTION2=value2 ... ../triqs_hubbardi.src
+    cmake ../triqs_hubbardI.src -DOPTION1=value1 -DOPTION2=value2 ... ../triqs_hubbardI.src
 
 +-----------------------------------------------------------------+-----------------------------------------------+
 | Options                                                         | Syntax                                        |
 +=================================================================+===============================================+
-| Specify an installation path other than path_to_triqs           | -DCMAKE_INSTALL_PREFIX=path_to_triqs_hubbardi |
+| Specify an installation path other than path_to_triqs           | -DCMAKE_INSTALL_PREFIX=path_to_triqs_hubbardI |
 +-----------------------------------------------------------------+-----------------------------------------------+
 | Build in Debugging Mode                                         | -DCMAKE_BUILD_TYPE=Debug                      |
 +-----------------------------------------------------------------+-----------------------------------------------+

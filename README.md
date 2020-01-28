@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/TRIQS/triqs_hubbardi.svg?branch=unstable)](https://travis-ci.org/TRIQS/triqs_hubbardi)
+[![Build Status](https://travis-ci.org/TRIQS/triqs_hubbardI.svg?branch=unstable)](https://travis-ci.org/TRIQS/triqs_hubbardI)
 
-# triqs_hubbardi - A Hubbard-I solver based on triqs atom_diag
+# triqs_hubbardI - A Hubbard-I solver based on triqs atom_diag
 
 
 This application implements the Hubbard-I solver in pytriqs using the lightweight diagonalization routine which come with triqs/atom_diag.

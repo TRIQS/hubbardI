@@ -21,7 +21,7 @@ If you are moving from 1.4 to 2.2 this might help: The parts of a script in vers
 transitions to the following in version 2.2
  .. code-block:: python
 
-	from triqs_hubbardi import *
+	from triqs_hubbardI import *
 
 	# Init the Hubbard-I solver:
 	S = Solver( beta, gf_struct )
