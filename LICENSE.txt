@@ -1,4 +1,4 @@
-hubbardI - An example application using triqs and cpp2py
+hubbardI - A TRIQS based hubbardI solver
 
 Copyright (C) 2019-2020, M. Schueler
 Copyright (C) 2019-2020, The Simons Foundation

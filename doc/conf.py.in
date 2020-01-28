@@ -19,7 +19,7 @@ extensions = ['sphinx.ext.autodoc',
 
 source_suffix = '.rst'
 
-project = u'TRIQS_HUBBARDI - An example triqs application'
+project = u'hubbardI - A TRIQS based hubbardI solver'
 copyright = u'2017-2018 N. Wentzell, O. Parcollet 2018-2019 The Simons Foundation, authors: N. Wentzell, D. Simons, H. Strand, O. Parcollet'
 version = '@PROJECT_VERSION@'
 
@@ -30,7 +30,7 @@ html_theme = 'triqs'
 html_theme_path = ['@TRIQS_THEMES_PATH@']
 html_show_sphinx = False
 html_context = {'header_title': 'hubbardI',
-                'header_subtitle': 'An example application using cpp2py and <a class="triqs" style="font-size: 12px" href="https://triqs.github.io">TRIQS</a>',
+                'header_subtitle': 'A <a class="triqs" style="font-size: 12px" href="https://triqs.github.io">TRIQS</a> based hubbardI solver',
                 'header_links': [['Install', 'install'],
                                  ['Documentation', 'documentation'],
                                  ['Issues', 'issues'],

@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/TRIQS/triqs_hubbardI.svg?branch=unstable)](https://travis-ci.org/TRIQS/triqs_hubbardI)
+[![Build Status](https://travis-ci.org/TRIQS/hubbardI.svg?branch=unstable)](https://travis-ci.org/TRIQS/hubbardI)
 
-# triqs_hubbardI - A Hubbard-I solver based on triqs atom_diag
+# hubbardI - A Hubbard-I solver based on triqs atom_diag
 
 
 This application implements the Hubbard-I solver in pytriqs using the lightweight diagonalization routine which come with triqs/atom_diag.
@@ -34,9 +34,9 @@ where `n_w, w_min, w_max, idelta` define the real axis and broadening by an imag
 The only thing you need is a working triqs installation. If you have sourced the `triqsvars.sh` file everything works automatically.
 
 ```bash
-git clone https://github.com/malte-schueler/triqs_hubbardI triqs_hubbardI.src
-mkdir triqs_hubbardI.build && cd triqs_hubbardI.build
-cmake ../triqs_hubbardI.src
+git clone https://github.com/malte-schueler/hubbardI hubbardI.src
+mkdir hubbardI.build && cd hubbardI.build
+cmake ../hubbardI.src
 make
 make test
 make install
