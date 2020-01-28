@@ -1,11 +1,11 @@
 .. _welcome:
 
-triqs_hubbardI
+hubbardI
 =================
 
-.. sidebar:: triqs_hubbardI 2.2.0
+.. sidebar:: hubbardI 2.2.0
 
-   This is the homepage of triqs_hubbardI v2.2.0.
+   This is the homepage of hubbardI v2.2.0.
    For changes see the :ref:`changelog page <changelog>`.
 
 An application using :ref:`TRIQS <triqslibs:welcome>` to implement a Hubbard-I solver.
@@ -14,7 +14,7 @@ Contrary to the hybridization-expansion algorithm, the Hubbard I solver does not
 
 Note that the Hubbard I approximation is only reasonable for strongly-localized systems, e.g. local moment rare-earth compounds. It is very fast and can be employed both on the Matsubara grid and on the real axis.
 
-Learn how to use triqs_hubbardI in the :ref:`documentation`.
+Learn how to use hubbardI in the :ref:`documentation`.
 
 .. toctree::
    :maxdepth: 2

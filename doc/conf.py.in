@@ -29,12 +29,12 @@ templates_path = ['@PROJECT_SOURCE_DIR@/doc/_templates']
 html_theme = 'triqs'
 html_theme_path = ['@TRIQS_THEMES_PATH@']
 html_show_sphinx = False
-html_context = {'header_title': 'triqs_hubbardI',
+html_context = {'header_title': 'hubbardI',
                 'header_subtitle': 'An example application using cpp2py and <a class="triqs" style="font-size: 12px" href="https://triqs.github.io">TRIQS</a>',
                 'header_links': [['Install', 'install'],
                                  ['Documentation', 'documentation'],
                                  ['Issues', 'issues'],
-                                 ['About triqs_hubbardI', 'about']]}
+                                 ['About hubbardI', 'about']]}
 html_static_path = ['@PROJECT_SOURCE_DIR@/doc/_static']
 html_sidebars = {'index': ['sideb.html', 'searchbox.html']}
 
