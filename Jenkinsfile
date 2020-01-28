@@ -1,5 +1,6 @@
 def projectName = "hubbardI" /* set to app/repo name */
 
+def dockerName = projectName.toLowerCase();
 /* which platform to build documentation on */
 def documentationPlatform = "ubuntu-clang"
 /* depend on triqs upstream branch/project */
@@ -37,7 +38,7 @@ for (int i = 0; i < dockerPlatforms.size(); i++) {
         mv -f Dockerfile.jenkins Dockerfile
       """
       /* build and tag */
-      def img = docker.build("flatironinstitute/${projectName}:${env.BRANCH_NAME}-${env.STAGE_NAME}", "--build-arg APPNAME=${projectName} --build-arg BUILD_DOC=${platform==documentationPlatform} .")
+      def img = docker.build("flatironinstitute/${dockerName}:${env.BRANCH_NAME}-${env.STAGE_NAME}", "--build-arg APPNAME=${projectName} --build-arg BUILD_DOC=${platform==documentationPlatform} .")
       if (!keepInstall) {
         sh "docker rmi --no-prune ${img.imageName()}"
       }
@@ -102,7 +103,7 @@ try {
         def subdir = "${projectName}/${env.BRANCH_NAME}"
         git(url: "ssh://git@github.com/TRIQS/TRIQS.github.io.git", branch: "master", credentialsId: "ssh", changelog: false)
         sh "rm -rf ${subdir}"
-        docker.image("flatironinstitute/${projectName}:${env.BRANCH_NAME}-${documentationPlatform}").inside() {
+        docker.image("flatironinstitute/${dockerName}:${env.BRANCH_NAME}-${documentationPlatform}").inside() {
           sh "cp -rp \$INSTALL/share/doc/triqs_${projectName} ${subdir}"
         }
         sh "git add -A ${subdir}"
