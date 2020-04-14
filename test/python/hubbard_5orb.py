@@ -57,4 +57,4 @@ with HDFArchive("hubbard.h5",'w') as A:
     A["G"] = S.G_iw
     A["Sigma"] = S.Sigma_iw
 
-print h5diff("hubbard.h5", "hubbard.ref.h5")
+print(h5diff("hubbard.h5", "hubbard.ref.h5"))

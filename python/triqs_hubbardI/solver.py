@@ -62,8 +62,8 @@ class Solver():
 
         
         if isinstance(gf_struct,dict):
-            print "WARNING: gf_struct should be a list of pairs [ (str,[int,...]), ...], not a dict"
-            gf_struct = [ [k, v] for k, v in gf_struct.iteritems() ]
+            print("WARNING: gf_struct should be a list of pairs [ (str,[int,...]), ...], not a dict")
+            gf_struct = [ [k, v] for k, v in gf_struct.items() ]
         
         g_w_list = []
         g_iw_list = []

@@ -50,7 +50,7 @@ if mpi.is_master_node():
     if 'iteration_count' in ar['DMFT_results']:
         previous_present = True
         iteration_offset = ar['DMFT_results']['iteration_count']+1
-        print 'reading iteration'+str(iteration_offset)
+        print('reading iteration'+str(iteration_offset))
         SK_tools.dc_imp = ar['DMFT_results']['Iterations']['dc_imp'+str(iteration_offset-1)]
         S.Sigma_w = ar['DMFT_results']['Iterations']['Sigma_w_it'+str(iteration_offset-1)]
         dc_energ = ar['DMFT_results']['Iterations']['dc_energ'+str(iteration_offset-1)]
@@ -77,4 +77,4 @@ if mpi.is_master_node():
     ar['DMFT_results']['Iterations']['DOS0_it'+str(iteration_offset-1)] = DOS0
     ar['DMFT_results']['Iterations']['DOSproj0_orb_it'+str(iteration_offset-1)] = DOSproj0_orb
 if mpi.is_master_node(): del ar
-if mpi.is_master_node(): print "done!"
+if mpi.is_master_node(): print("done!")

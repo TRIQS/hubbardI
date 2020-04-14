@@ -51,7 +51,7 @@ with HDFArchive("class.ref.h5",'r') as Results:
 
 for key in dir(S):
     if 'G' in key or 'Sigma' in key:
-        print 'comparing', key
+        print('comparing', key)
         
         val = getattr(S, key)
         val_ref = getattr(S_ref, key)
@@ -64,12 +64,12 @@ for key in dir(S):
         else:
             raise Exception("Invalid type in comparison")
     elif '__' not in key and 'ad' not in key and 'solve' not in key and 'eal' not in key:
-        print 'comparing', key
+        print('comparing', key)
         val = getattr(S, key)
         val_ref = getattr(S_ref, key)
         assert val == val_ref
     elif 'eal' in key:
-        print 'comparing', key
+        print('comparing', key)
         val = getattr(S, key)
         val_ref = getattr(S_ref, key)
         for name in val.keys():
