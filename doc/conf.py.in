@@ -19,8 +19,8 @@ extensions = ['sphinx.ext.autodoc',
 
 source_suffix = '.rst'
 
-project = u'hubbardI - A TRIQS based hubbardI solver'
-copyright = u'2017-2018 N. Wentzell, O. Parcollet 2018-2019 The Simons Foundation, authors: N. Wentzell, D. Simons, H. Strand, O. Parcollet'
+project = 'hubbardI - A TRIQS based hubbardI solver'
+copyright = '2019-2020 M. Schueler 2019-2020 The Simons Foundation, authors: N. Wentzell'
 version = '@PROJECT_VERSION@'
 
 mathjax_path = "@TRIQS_MATHJAX_PATH@/MathJax.js?config=default"
