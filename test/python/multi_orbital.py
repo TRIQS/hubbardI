@@ -21,7 +21,7 @@
 #!/usr/bin/env python
 
 from triqs_hubbardI import *
-from pytriqs.archive import *
+from h5 import *
 from pytriqs.gf import *
 from pytriqs.utility.h5diff import h5diff
 import pytriqs.operators.util as op

@@ -8,11 +8,11 @@ Here is the implementation for an Anderson impurity model with a flat (Wilson) h
 .. code-block:: python
 
    from triqs_hubbardI import *
-   from pytriqs.archive import *
+   from h5 import *
    from pytriqs.gf import *
    from pytriqs.operators import *
    from pytriqs.utility.h5diff import h5diff
-   from pytriqs.archive import HDFArchive
+   from h5 import HDFArchive
    
    D, V, U = 1.0, 0.2, 4.0
    e_f, beta = -U/2.0, 50
@@ -38,7 +38,7 @@ Let us plot the result by
 .. code-block:: python
 		
 	from pytriqs.gf import *
-	from pytriqs.archive import *
+	from h5 import *
 	from pytriqs.plot.mpl_interface import oplot
 
 	with HDFArchive('aim_solution.h5','r') as ar:

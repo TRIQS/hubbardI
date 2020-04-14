@@ -19,14 +19,14 @@
 #
 ##############################################################################
 from triqs_hubbardI import *
-from pytriqs.archive import *
+from h5 import *
 from pytriqs.gf import *
 from pytriqs.operators import *
-from pytriqs.archive import HDFArchive
+from h5 import HDFArchive
 import numpy as np
 
 # registering my class
-#from pytriqs.archive.hdf_archive_schemes import register_class
+#from h5.formats import register_class
 #register_class (Solver)
 D, V, U = 1.0, 0.2, 4.0
 e_f, beta = -U/2.0, 50
