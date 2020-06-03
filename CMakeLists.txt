@@ -32,7 +32,7 @@ endif()
 
 # ############
 # Define Project
-project(app4triqs VERSION 3.0.0 LANGUAGES C CXX)
+project(triqs_hubbardI VERSION 3.0.0 LANGUAGES C CXX)
 get_directory_property(IS_SUBPROJECT PARENT_DIRECTORY)
 
 # ############
@@ -122,7 +122,7 @@ if(BUILD_DEBIAN_PACKAGE AND NOT IS_SUBPROJECT)
   set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
   set(CPACK_GENERATOR "DEB")
   set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
-  set(CPACK_PACKAGE_CONTACT "https://github.com/TRIQS/${PROJECT_NAME}")
+  set(CPACK_PACKAGE_CONTACT "https://github.com/TRIQS/hubbardI")
   execute_process(COMMAND dpkg --print-architecture OUTPUT_VARIABLE CMAKE_DEBIAN_PACKAGE_ARCHITECTURE OUTPUT_STRIP_TRAILING_WHITESPACE)
   set(CPACK_DEBIAN_PACKAGE_DEPENDS "triqs (>= 3.0)")
   set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)

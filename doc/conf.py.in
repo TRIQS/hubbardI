@@ -20,10 +20,10 @@ extensions = ['sphinx.ext.autodoc',
 
 source_suffix = '.rst'
 
-project = '@PROJECT_NAME@'
+project = '@PROJECT_NAME@ - A TRIQS based hubbardI solver'
 version = '@PROJECT_VERSION@'
 
-copyright = '2017-2018 N. Wentzell, O. Parcollet 2018-2019 The Simons Foundation, authors: N. Wentzell, D. Simons, H. Strand, O. Parcollet'
+copyright = '2019-2020 M. Schueler 2019-2020 The Simons Foundation, authors: N. Wentzell'
 
 mathjax_path = "https://raw.githubusercontent.com/mathjax/MathJax/2.7.8/MathJax.js"
 templates_path = ['@CMAKE_CURRENT_SOURCE_DIR@/_templates']
@@ -32,7 +32,7 @@ html_theme = 'triqs'
 html_theme_path = ['@CMAKE_CURRENT_SOURCE_DIR@/themes']
 html_show_sphinx = False
 html_context = {'header_title': '@PROJECT_NAME@',
-                'header_subtitle': 'An example application using cpp2py and <a class="triqs" style="font-size: 12px" href="https://triqs.github.io">TRIQS</a>',
+                'header_subtitle': 'A <a class="triqs" style="font-size: 12px" href="https://triqs.github.io">TRIQS</a> based hubbardI solver',
                 'header_links': [['Install', 'install'],
                                  ['Documentation', 'documentation'],
                                  ['Issues', 'issues'],
