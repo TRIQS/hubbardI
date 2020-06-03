@@ -25,4 +25,6 @@ r"""
 DOC
 
 """
-__all__ = []
+from .solver import Solver
+
+__all__ = ['Solver']
