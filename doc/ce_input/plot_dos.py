@@ -22,7 +22,7 @@ from h5 import HDFArchive
 import matplotlib.pyplot as plt
 import numpy as np
 from triqs_dft_tools.sumk_dft import *
-from pytriqs.gf import *
+from triqs.gf import *
 
 ar = HDFArchive('ce.h5', 'r')
 out = ar['DMFT_results']

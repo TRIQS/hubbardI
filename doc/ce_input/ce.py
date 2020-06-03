@@ -20,14 +20,14 @@
 ##############################################################################
 from itertools import *
 import numpy as np
-import pytriqs.utility.mpi as mpi
+import triqs.utility.mpi as mpi
 from h5 import *
-from pytriqs.gf import *
-import sys, pytriqs.version as triqs_version
+from triqs.gf import *
+import sys, triqs.version as triqs_version
 from triqs_dft_tools.sumk_dft import *
 from triqs_dft_tools.sumk_dft_tools import *
-from pytriqs.operators.util.hamiltonians import *
-from pytriqs.operators.util.U_matrix import *
+from triqs.operators.util.hamiltonians import *
+from triqs.operators.util.U_matrix import *
 import triqs_dft_tools.version as dft_tools_version
 from triqs_hubbardI import *
 import triqs_hubbardI.version as hubbardI_version

@@ -22,9 +22,9 @@
 
 from triqs_hubbardI import *
 from h5 import *
-from pytriqs.gf import *
-from pytriqs.utility.h5diff import h5diff
-import pytriqs.operators.util as op
+from triqs.gf import *
+from triqs.utility.h5diff import h5diff
+import triqs.operators.util as op
 
 
 # General parameters
@@ -65,7 +65,7 @@ h5diff('bethe5.h5', 'bethe5.ref.h5')
 
 # this can be reproduced with the triqs 1.4 Hubbard-I  solver with the following script:
 
-#from pytriqs.applications.impurity_solvers.hubbard_I import Solver
+#from triqs.applications.impurity_solvers.hubbard_I import Solver
 #import numpy
 
 

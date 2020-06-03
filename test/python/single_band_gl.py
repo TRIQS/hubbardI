@@ -22,9 +22,9 @@
 
 from triqs_hubbardI import *
 from h5 import *
-from pytriqs.gf import *
-from pytriqs.operators import *
-from pytriqs.utility.h5diff import h5diff
+from triqs.gf import *
+from triqs.operators import *
+from triqs.utility.h5diff import h5diff
 
 D, V, U = 1.0, 0.2, 4.0
 e_f, beta = -U/2.0, 50

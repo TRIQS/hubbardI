@@ -9,9 +9,9 @@ Here is the implementation for an Anderson impurity model with a flat (Wilson) h
 
    from triqs_hubbardI import *
    from h5 import *
-   from pytriqs.gf import *
-   from pytriqs.operators import *
-   from pytriqs.utility.h5diff import h5diff
+   from triqs.gf import *
+   from triqs.operators import *
+   from triqs.utility.h5diff import h5diff
    from h5 import HDFArchive
    
    D, V, U = 1.0, 0.2, 4.0
@@ -37,9 +37,9 @@ Let us plot the result by
 
 .. code-block:: python
 		
-	from pytriqs.gf import *
+	from triqs.gf import *
 	from h5 import *
-	from pytriqs.plot.mpl_interface import oplot
+	from triqs.plot.mpl_interface import oplot
 
 	with HDFArchive('aim_solution.h5','r') as ar:
 		oplot(ar['G_iw']['up'], '-o', x_window = (0,10))

@@ -18,11 +18,11 @@
 # hubbardI. If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from pytriqs.gf import *
-from pytriqs.atom_diag import *
+from triqs.gf import *
+from triqs.atom_diag import *
 from itertools import *
 import numpy as np
-from pytriqs.operators import Operator, c, c_dag, n
+from triqs.operators import Operator, c, c_dag, n
 
 class Solver():
     """Class providing initialization and solve function. Contains all relevant Greensfunctions and self energy."""

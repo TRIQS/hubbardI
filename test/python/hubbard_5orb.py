@@ -27,9 +27,9 @@
 
 from triqs_hubbardI import *
 from h5 import *
-from pytriqs.gf import *
-from pytriqs.utility.h5diff import h5diff
-import pytriqs.operators.util as op
+from triqs.gf import *
+from triqs.utility.h5diff import h5diff
+import triqs.operators.util as op
 
 # General parameters
 beta = 200.0                                  # Inverse temperature
