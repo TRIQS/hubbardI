@@ -64,7 +64,7 @@ Custom CMake options
 
 The compilation of ``hubbardI`` can be configured using CMake-options::
 
-    cmake ../hubbardI.src -DOPTION1=value1 -DOPTION2=value2 ... ../hubbardI.src
+    cmake ../hubbardI.src -DOPTION1=value1 -DOPTION2=value2 ...
 
 +-----------------------------------------------------------------+-----------------------------------------------+
 | Options                                                         | Syntax                                        |
