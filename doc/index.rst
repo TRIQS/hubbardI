@@ -3,9 +3,9 @@
 hubbardI
 =================
 
-.. sidebar:: hubbardI 2.2.0
+.. sidebar:: hubbardI 3.0.0
 
-   This is the homepage of hubbardI v2.2.0.
+   This is the homepage of hubbardI v3.0.0.
    For changes see the :ref:`changelog page <changelog>`.
 
 An application using :ref:`TRIQS <triqslibs:welcome>` to implement a Hubbard-I solver.
