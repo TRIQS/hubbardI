@@ -1,5 +1,14 @@
+Version 3.0.0
+=============
+
+hubbardI version 3.0.0 is a compatibility
+release for TRIQS version 3.0.0 that
+* introduces compatibility with Python 3 (Python 2 no longer supported)
+* adds a cmake-based dependency management
+
+
 Version 2.2
-----------------
+===========
 
 This is a complete rewrite which is compatible to triqs 2.2. For solving the atomic problem the atom_diag function of triqs is used. The solve function now works completely similar to the cthyb solve function which ensures exchangeability between both solvers.
 
@@ -46,6 +55,6 @@ We can see two main changes:
 For a more detailed comparison compare the Ce example in the tutorial section of the dft_tools app and the Ce example in the example section here: :ref:`ce`
 
 Version 1.4
--------------
+===========
 
 This version is only compatible to triqs 1.4. It comes with a fortran solver for the atomic problem.

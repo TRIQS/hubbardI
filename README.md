@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/TRIQS/hubbardI.svg?branch=unstable)](https://travis-ci.org/TRIQS/hubbardI)
+[![build](https://github.com/TRIQS/hubbardI/workflows/build/badge.svg)](https://github.com/TRIQS/hubbardI/actions?query=workflow%3Abuild)
 
 # hubbardI - A Hubbard-I solver based on triqs atom_diag
 
@@ -11,11 +11,11 @@ The Solver comes with the same usage as, e.g., the [cthyb solver](https://triqs.
 * Run the following commands in order after replacing **appname** accordingly
 
 ```bash
-git clone https://github.com/triqs/app4triqs --branch python_only appname
+git clone https://github.com/triqs/hubbardI --branch python_only appname
 cd appname
 ./share/squash_history.sh
 ./share/replace_and_rename.py appname
-git add -A && git commit -m "Adjust app4triqs skeleton for appname"
+git add -A && git commit -m "Adjust hubbardI skeleton for appname"
 ```
 and initializing the non_interacting Green's function
 ```python
@@ -25,13 +25,13 @@ G.G0_iw = ...
 If you prefer to use the [SSH interface](https://help.github.com/en/articles/connecting-to-github-with-ssh)
 to the remote repository, replace the http link with e.g. `git@github.com:username/appname`.
 
-### Merging app4triqs skeleton updates ###
+### Merging hubbardI skeleton updates ###
 
-You can merge future changes to the app4triqs skeleton into your project with the following commands
+You can merge future changes to the hubbardI skeleton into your project with the following commands
 
 ```bash
 git remote update
-git merge app4triqs_remote/python_only -m "Merge latest app4triqs skeleton changes"
+git merge hubbardI_remote/python_only -m "Merge latest hubbardI skeleton changes"
 ```
 With optional parameters in the `solve` function `calc_gtau = True`, `calc_gw = True`, and `calc_gl = True` the solver also additionally calculates the interacting Green's function on the real axis, imaginary time and legendre. For the real and Matsubara axis, also the self energy is calculated. By using `calc_dm = True` the density matrix (stored in S.dm) is also calculated which enables the calculation of local observables. For further details refer to the documentation of atom_diag on the triqs homepage.
 
@@ -45,14 +45,14 @@ Getting Started
 ---------------
 
 After setting up your application as described above you should customize the following files and directories
-according to your needs (replace app4triqs in the following by the name of your application)
+according to your needs (replace hubbardI in the following by the name of your application)
 
 * Adjust or remove the `README.md` and `doc/ChangeLog.md` file
-* In the `python/app4triqs` subdirectory add your Python source files.
+* In the `python/hubbardI` subdirectory add your Python source files.
 * In the `test/python` subdirectory adjust the example test `Basic.py` or add your own tests.
 * Adjust any documentation examples given as `*.rst` files in the doc directory.
 * Adjust the sphinx configuration in `doc/conf.py.in` as necessary.
-* The build and install process is identical to the one outline [here](https://triqs.github.io/app4triqs/unstable/install.html).
+* The build and install process is identical to the one outline [here](https://triqs.github.io/hubbardI/unstable/install.html).
 
 ### Optional ###
 ----------------
