@@ -36,12 +36,11 @@ class Solver():
         ----------
         beta : scalar
                Inverse temperature.
-        gf_struct : list of pairs [ (str,[int,...]), ...]
+        gf_struct : list of pairs [ (str,int), ...]
                     Structure of the Green's functions. It must be a
                     list of pairs, each containing the name of the
-                    Green's function block as a string and a list of integer
-                    indices.
-                    For example: ``[ ('up', [0, 1, 2]), ('down', [0, 1, 2]) ]``.
+                    Green's function block and its linear size.
+                    For example: ``[ ('up', 3), ('down', 3) ]``.
         n_iw : integer, optional
                Number of Matsubara frequencies used for the Green's functions.
         n_tau : integer, optional
@@ -59,23 +58,19 @@ class Solver():
 
         """
 
-
-        
-        if isinstance(gf_struct,dict):
-            print("WARNING: gf_struct should be a list of pairs [ (str,[int,...]), ...], not a dict")
-            gf_struct = [ [k, v] for k, v in gf_struct.items() ]
+        gf_struct = fix_gf_struct_type(gf_struct)
         
         g_w_list = []
         g_iw_list = []
         g_tau_list = []
         g_l_list = []
 
-        name_list = [block for block, ind in gf_struct]
-        for block, ind in gf_struct:
-            g_w_list.append(GfReFreq(indices = ind, window = (w_min, w_max), n_points = n_w))
-            g_iw_list.append(GfImFreq(indices = ind, beta = beta, n_points = n_iw))
-            g_tau_list.append(GfImTime(indices = ind, beta = beta, n_points = n_tau))
-            g_l_list.append(GfLegendre(indices = ind, beta = beta, n_points = n_l))
+        name_list = [block for block, block_size in gf_struct]
+        for block, block_size in gf_struct:
+            g_w_list.append(GfReFreq(window = (w_min, w_max), n_points = n_w, target_shape = (block_size, block_size)))
+            g_iw_list.append(GfImFreq(beta = beta, n_points = n_iw, target_shape = (block_size, block_size)))
+            g_tau_list.append(GfImTime(beta = beta, n_points = n_tau, target_shape = (block_size, block_size)))
+            g_l_list.append(GfLegendre(beta = beta, n_points = n_l, target_shape = (block_size, block_size)))
             
         self.G0_w = BlockGf(name_list = name_list, block_list = g_w_list)
         self.G0_iw = BlockGf(name_list = name_list, block_list = g_iw_list)
@@ -107,13 +102,13 @@ class Solver():
         self.idelta = idelta
         
         self.fops = []
-        for block, ind in gf_struct:
-            for ii in ind:
+        for block, block_size in gf_struct:
+            for ii in range(block_size):
                 self.fops.append((block,ii))
 
         self.eal = dict()
-        for block, ind in self.gf_struct:
-            self.eal[block]= np.zeros((len(ind),len(ind)))
+        for block, block_size in self.gf_struct:
+            self.eal[block]= np.zeros((block_size,block_size))
         
     def solve(self, **params_kw):
         """
@@ -161,7 +156,7 @@ class Solver():
         Delta_iw -= inverse(self.G0_iw)
 
             
-        for block, ind in self.gf_struct:
+        for block, block_size in self.gf_struct:
             a = Delta_iw[block].fit_tail()
             self.eal[block] = a[0][0]               
                 
@@ -173,7 +168,7 @@ class Solver():
         if calc_gw:
             G0_w_F << Omega
         
-        for block, ind in self.gf_struct:
+        for block, block_size in self.gf_struct:
             G0_iw_F[block] -= self.eal[block]
             if calc_gw:
                 G0_w_F[block] -= self.eal[block]
@@ -183,10 +178,10 @@ class Solver():
             G0_w_F = inverse(G0_w_F)
         
         H_loc = 1.0*h_int
-        for block, ind in self.gf_struct:
-            for ii,ii_ind in enumerate(ind):
-                for jj,jj_ind in enumerate(ind):
-                    H_loc += self.eal[block][ii,jj]*c_dag(block,ii_ind)*c(block,jj_ind)
+        for block, block_size in self.gf_struct:
+            for ii in range(block_size):
+                for jj in range(block_size):
+                    H_loc += self.eal[block][ii,jj]*c_dag(block,ii)*c(block,jj)
 
         self.ad = AtomDiag(H_loc, self.fops)
         
@@ -230,7 +225,7 @@ class Solver():
         instance.G_iw = D['G_iw'] 
         instance.Sigma_w = D['Sigma_w'] 
         instance.G_w = D['G_w'] 
-        instance.gf_struct = D['gf_struct'] 
+        instance.gf_struct = fix_gf_struct_type(D['gf_struct'])
         instance.fops = D['fops'] 
         instance.eal = D['eal']
         instance.ad = D['ad']
@@ -239,4 +234,4 @@ class Solver():
     
 # registering my class                                                                                
 from h5.formats import register_class
-register_class (Solver)
+register_class(Solver)

@@ -32,15 +32,15 @@ from triqs.utility.h5diff import h5diff
 import triqs.operators.util as op
 
 # General parameters
-beta = 200.0                                  # Inverse temperature
+beta = 200.0                                 # Inverse temperature
 l = 2                                        # Angular momentum
 n_orbs = 2*l + 1                             # Number of orbitals
 U = 6.0                                      # Screened Coulomb interaction
 J = 0.6                                      # Hund's coupling
 half_bandwidth = 1.0                         # Half bandwidth
-mu = 1.0                                    # Chemical potential
+mu = 1.0                                     # Chemical potential
 spin_names = ['up','down']                   # Outer (non-hybridizing) blocks
-orb_names = ['%s'%i for i in range(n_orbs)]  # Orbital indices
+orb_names = [i for i in range(n_orbs)]       # Orbital indices
 off_diag=True
 
 gf_struct = op.set_operator_structure(spin_names,orb_names,off_diag=off_diag) 

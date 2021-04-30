@@ -36,7 +36,7 @@ J = 1.0                                      # Hund's coupling
 half_bandwidth = 1.0                         # Half bandwidth
 mu = 25.0                                    # Chemical potential
 spin_names = ['up','down']                   # Outer (non-hybridizing) blocks
-orb_names = ['%s'%i for i in range(n_orbs)]  # Orbital indices
+orb_names = [i for i in range(n_orbs)]       # Orbital indices
 off_diag=True
 
 gf_struct = op.set_operator_structure(spin_names,orb_names,off_diag=off_diag) 
