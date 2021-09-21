@@ -1,12 +1,18 @@
 .. _welcome:
 
 hubbardI
-=================
+********
 
 .. sidebar:: hubbardI 3.0.0
 
    This is the homepage of hubbardI v3.0.0.
    For changes see the :ref:`changelog page <changelog>`.
+      
+      .. image:: _static/logo_github.png
+         :width: 75%
+         :align: center
+         :target: https://github.com/triqs/hubbardI
+
 
 An application using :ref:`TRIQS <triqslibs:welcome>` to implement a Hubbard-I solver.
 
@@ -16,5 +22,13 @@ Note that the Hubbard I approximation is only reasonable for strongly-localized 
 
 Learn how to use hubbardI in the :ref:`documentation`.
 
+    
 .. toctree::
    :maxdepth: 2
+   :hidden:
+
+   install
+   documentation
+   issues
+   ChangeLog.md
+   about
