@@ -203,35 +203,39 @@ class Solver():
 
 
     def __reduce_to_dict__(self):
-       return {'G0_w': self.G0_w, 'G0_iw': self.G0_iw,'G_tau': self.G_tau,
-               'G_l': self.G_l, 'Sigma_iw': self.Sigma_iw, 'G_iw': self.G_iw,
-               'Sigma_w': self.Sigma_w, 'G_w': self.G_w,
-               'gf_struct': self.gf_struct, 'n_iw': self.n_iw, 'n_w': self.n_w,
-               'n_tau': self.n_tau, 'n_l': self.n_l,'beta': self.beta,
-               'w_min': self.w_min,'w_max': self.w_max,'ad':self.ad,
-               'idelta': self.idelta,'fops': self.fops,'eal':self.eal}
+        store_dict = {'G0_w': self.G0_w, 'G0_iw': self.G0_iw,'G_tau': self.G_tau,
+                      'G_l': self.G_l, 'Sigma_iw': self.Sigma_iw, 'G_iw': self.G_iw,
+                      'Sigma_w': self.Sigma_w, 'G_w': self.G_w,
+                      'gf_struct': self.gf_struct, 'n_iw': self.n_iw, 'n_w': self.n_w,
+                      'n_tau': self.n_tau, 'n_l': self.n_l,'beta': self.beta,
+                      'w_min': self.w_min,'w_max': self.w_max,
+                      'idelta': self.idelta,'fops': self.fops,'eal':self.eal}
+        if hasattr(self, 'ad'):
+            store_dict['ad'] = self.ad
+
+        return store_dict
 
     @classmethod
     def __factory_from_dict__(cls,name,D) :
-       
+
         instance = cls(D['beta'], D['gf_struct'], D['n_iw'], D['n_tau'],
                        D['n_l'], D['n_w'], D['w_min'], D['w_max'], D['idelta'])
-                      
-        instance.G0_w = D['G0_w'] 
-        instance.G0_iw = D['G0_iw'] 
-        instance.G_tau = D['G_tau'] 
-        instance.G_l = D['G_l'] 
-        instance.Sigma_iw = D['Sigma_iw'] 
-        instance.G_iw = D['G_iw'] 
-        instance.Sigma_w = D['Sigma_w'] 
-        instance.G_w = D['G_w'] 
+
+        instance.G0_w = D['G0_w']
+        instance.G0_iw = D['G0_iw']
+        instance.G_tau = D['G_tau']
+        instance.G_l = D['G_l']
+        instance.Sigma_iw = D['Sigma_iw']
+        instance.G_iw = D['G_iw']
+        instance.Sigma_w = D['Sigma_w']
+        instance.G_w = D['G_w']
         instance.gf_struct = fix_gf_struct_type(D['gf_struct'])
-        instance.fops = D['fops'] 
+        instance.fops = D['fops']
         instance.eal = D['eal']
         instance.ad = D['ad']
-       
+
         return instance
-    
-# registering my class                                                                                
+
+# registering my class
 from h5.formats import register_class
 register_class(Solver)
