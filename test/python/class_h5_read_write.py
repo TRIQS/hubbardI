@@ -37,14 +37,18 @@ S = Solver(beta = beta, gf_struct = [ ('up',1), ('down',1) ],idelta=0.5,n_iw=20,
 # set the non-interacting Green's function
 for name, g0 in S.G0_iw: g0 << inverse(iOmega_n - e_f - V**2 * Wilson(D))
 
+# Save the solver object before solving
+with HDFArchive("class.h5",'w') as Results:
+     Results["Solver"] = S
+
 # solve the atomic problem
 S.solve( h_int = U * n('up',0) * n('down',0) )
 
 # Save the results in an HDF5 file (only on the master node)
 with HDFArchive("class.h5",'w') as Results:
      Results["Solver"] = S
-     
-# Read the results from the reference HDF5 file 
+
+# Read the results from the reference HDF5 file
 with HDFArchive("class.ref.h5",'r') as Results:
      S_ref = Results["Solver"]
 
