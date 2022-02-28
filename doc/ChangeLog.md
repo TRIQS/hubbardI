@@ -2,6 +2,12 @@
 
 # Changelog
 
+## Version 3.1.0
+
+hubbardI version 3.1.0 is a compatibility
+release for TRIQS version 3.1.0
+
+
 ## Version 3.0.0
 
 hubbardI version 3.0.0 is a compatibility
