@@ -5,7 +5,12 @@
 ## Version 3.1.0
 
 hubbardI version 3.1.0 is a compatibility
-release for TRIQS version 3.1.0
+release for TRIQS version 3.1.0 that
+* uses the latest [app4triqs/3.1.x](https://github.com/TRIQS/app4triqs) skeleton
+* switches documentation to read-the-docs theme
+* improves ghactions and jenkins configuration
+
+We thank all contributors: Alexander Hampel, Dylan Simon, Nils Wentzell
 
 
 ## Version 3.0.0
