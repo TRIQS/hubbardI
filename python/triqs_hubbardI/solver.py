@@ -23,6 +23,7 @@ from triqs.atom_diag import *
 from itertools import *
 import numpy as np
 from triqs.operators import Operator, c, c_dag, n
+import triqs.utility.mpi as mpi
 
 class Solver():
     """Class providing initialization and solve function. Contains all relevant Greensfunctions and self energy."""
@@ -59,7 +60,7 @@ class Solver():
         """
 
         gf_struct = fix_gf_struct_type(gf_struct)
-        
+
         g_w_list = []
         g_iw_list = []
         g_tau_list = []
@@ -71,36 +72,36 @@ class Solver():
             g_iw_list.append(GfImFreq(beta = beta, n_points = n_iw, target_shape = (block_size, block_size)))
             g_tau_list.append(GfImTime(beta = beta, n_points = n_tau, target_shape = (block_size, block_size)))
             g_l_list.append(GfLegendre(beta = beta, n_points = n_l, target_shape = (block_size, block_size)))
-            
+
         self.G0_w = BlockGf(name_list = name_list, block_list = g_w_list)
         self.G0_iw = BlockGf(name_list = name_list, block_list = g_iw_list)
-        self.G_tau = BlockGf(name_list = name_list, block_list = g_tau_list)        
+        self.G_tau = BlockGf(name_list = name_list, block_list = g_tau_list)
         self.G_l = BlockGf(name_list = name_list, block_list = g_l_list)
-        
+
         self.Sigma_iw = self.G0_iw.copy()
         self.Sigma_iw.zero()
-        
+
         self.G_iw = self.G0_iw.copy()
         self.G_iw.zero()
-        
+
         self.Sigma_w = self.G0_w.copy()
         self.Sigma_w.zero()
-        
+
         self.G_w = self.G0_w.copy()
         self.G_w.zero()
-        
+
         self.gf_struct = gf_struct
-        
+
         self.n_iw = n_iw
         self.n_tau = n_tau
         self.n_l = n_l
         self.beta = beta
-        
+
         self.n_w = n_w
         self.w_min = w_min
         self.w_max = w_max
         self.idelta = idelta
-        
+
         self.fops = []
         for block, block_size in gf_struct:
             for ii in range(block_size):
@@ -109,7 +110,7 @@ class Solver():
         self.eal = dict()
         for block, block_size in self.gf_struct:
             self.eal[block]= np.zeros((block_size,block_size))
-        
+
     def solve(self, **params_kw):
         """
         Solve the impurity problem: calculate G(iw) and Sigma(iw)
@@ -119,7 +120,7 @@ class Solver():
         params_kw : dict {'param':value} that is passed to the core solver.
                     Only required parameter is
                         * `h_int` (:ref:`Operator object <triqslibs:operators>`): the local Hamiltonian of the impurity problem to be solved,
-                    Other parameters are 
+                    Other parameters are
                         * `calc_gtau` (bool): calculate G(tau)
                         * `calc_gw` (bool): calculate G(w) and Sigma(w)
                         * `calc_gl` (bool): calculate G(legendre)
@@ -127,15 +128,15 @@ class Solver():
 
         """
 
-        
-        
-  
+        mpi.report('TRIQS: HubbardI solver')
+
+
         h_int = params_kw['h_int']
         try:
             calc_gtau = params_kw['calc_gtau']
         except KeyError:
             calc_gtau = False
-        
+
         try:
             calc_gw = params_kw['calc_gw']
         except KeyError:
@@ -150,41 +151,46 @@ class Solver():
             calc_dm = params_kw['calc_dm']
         except KeyError:
             calc_dm = False
-            
+
         Delta_iw = 0*self.G0_iw
         Delta_iw << iOmega_n
         Delta_iw -= inverse(self.G0_iw)
 
-            
+
         for block, block_size in self.gf_struct:
             a = Delta_iw[block].fit_tail()
-            self.eal[block] = a[0][0]               
-                
+            self.eal[block] = a[0][0]
+
         G0_iw_F = 0*self.G_iw
         if calc_gw:
             G0_w_F = 0*self.G_w
-        
+
         G0_iw_F << iOmega_n
         if calc_gw:
             G0_w_F << Omega
-        
+
         for block, block_size in self.gf_struct:
             G0_iw_F[block] -= self.eal[block]
             if calc_gw:
                 G0_w_F[block] -= self.eal[block]
-            
+
         G0_iw_F = inverse(G0_iw_F)
         if calc_gw:
             G0_w_F = inverse(G0_w_F)
-        
+
         H_loc = 1.0*h_int
         for block, block_size in self.gf_struct:
             for ii in range(block_size):
                 for jj in range(block_size):
                     H_loc += self.eal[block][ii,jj]*c_dag(block,ii)*c(block,jj)
 
+        mpi.report('\n')
+        mpi.report('The local Hamiltonian of the problem:')
+        mpi.report(H_loc)
+        mpi.report('\n')
+
         self.ad = AtomDiag(H_loc, self.fops)
-        
+
         self.G_iw = atomic_g_iw(self.ad, self.beta, self.gf_struct, self.n_iw )
         if calc_gw:
             self.G_w = atomic_g_w(self.ad, self.beta, self.gf_struct, (self.w_min,self.w_max), self.n_w, self.idelta)
