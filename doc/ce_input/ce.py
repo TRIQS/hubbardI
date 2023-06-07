@@ -71,7 +71,7 @@ H = Operator()
 U = 6.0
 J = 0.7
 
-U_sph = U_matrix(l=3, U_int=U, J_hund=J)
+U_sph = U_matrix_slater(l=3, U_int=U, J_hund=J)
 U_cubic = transform_U_matrix(U_sph, spherical_to_cubic(l=3, convention=''))
 
 H = h_int_slater(spin_names, orb_names, U_cubic, map_operator_structure=SK.sumk_to_solver[0])

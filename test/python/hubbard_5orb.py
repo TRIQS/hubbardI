@@ -44,7 +44,7 @@ orb_names = [i for i in range(n_orbs)]       # Orbital indices
 off_diag=True
 
 gf_struct = op.set_operator_structure(spin_names,orb_names,off_diag=off_diag) 
-U_mat = op.U_matrix(l=l, U_int=U, J_hund=J, basis='spherical')
+U_mat = op.U_matrix_slater(l=l, U_int=U, J_hund=J, basis='spherical')
 H = op.h_int_slater(spin_names,orb_names,U_mat,off_diag=off_diag)
 
 S = Solver(beta=beta, gf_struct=gf_struct, n_iw = 1025)
