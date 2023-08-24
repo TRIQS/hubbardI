@@ -1,7 +1,7 @@
 easyblock = 'CMakeMake'
 
 name = 'TRIQS-hubbardI'
-version = '3.1.0'
+version = '3.2.0'
 
 homepage = 'https://triqs.github.io/hubbardI/'
 description = """
@@ -27,7 +27,7 @@ dependencies = [
     ('GMP', '6.2.1'),
     ('HDF5', '1.10.7'),
     ('Mako', '1.1.4'),
-    ('TRIQS', '3.1.0'),
+    ('TRIQS', '3.2.0'),
     ('NFFT', '3.5.2')
 ]
 
@@ -40,16 +40,14 @@ separate_build_dir = True
 runtest = 'test'
 
 sanity_check_paths = {
-    'files': ['lib/libhubbardI_c.a'],
-    'dirs': ['include/hubbardI', 'lib', 'share',
-             'lib/python%(pyshortver)s/site-packages/hubbardI'],
+    'dirs': ['lib', 'share',
+             'lib/python%(pyshortver)s/site-packages/triqs_hubbardI'],
 }
 
-sanity_check_commands = ["python -c 'import hubbardI'"]
+sanity_check_commands = ["python -c 'import triqs_hubbardI'"]
 
 modextrapaths = {
-    'CPLUS_INCLUDE_PATH': 'include',
-    'PYTHONPATH': 'lib/python%(pyshortver)s/site-packages',
+    'PYTHONPATH': 'lib/python%(pyshortver)s/site-packages/triqs_hubbardI',
     'CMAKE_PREFIX_PATH': 'lib/cmake/hubbardI',
 }
 modextravars = {

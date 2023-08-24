@@ -97,7 +97,7 @@ endif()
 add_subdirectory(python/${PROJECT_NAME})
 
 # Docs
-if(Build_Documentation)
+if(NOT IS_SUBPROJECT AND Build_Documentation)
   add_subdirectory(doc)
 endif()
 
