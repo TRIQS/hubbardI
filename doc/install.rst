@@ -5,19 +5,37 @@
 Install hubbardI
 ****************
 
+Packaged Versions of hubbardI
+=============================
+
+.. _ubuntu_debian:
+Ubuntu Debian packages
+----------------------
+
+We provide a Debian package for the Ubuntu LTS Version 22.04 (jammy), which can be installed by following the steps outlined :ref:`here <triqslibs:triqs_debian>`, and the subsequent command::
+
+        sudo apt-get install -y triqs_hubbardi
+
+.. _docker:
+Docker
+------
+
+A Docker image including the latest version of hubbardI is available `here <https://hub.docker.com/r/flatironinstitute/triqs>`_. For more information, please see the page on :ref:`TRIQS Docker <triqslibs:triqs_docker>`.
+
+
 Compiling hubbardI from source
-===============================
+==============================
 
 .. note:: To guarantee reproducibility in scientific calculations we strongly recommend the use of a stable `release <https://github.com/TRIQS/triqs/releases>`_ of both TRIQS and its applications.
 
 Prerequisites
-----------------
+-------------
 
 #. The :ref:`TRIQS <triqslibs:welcome>` library, see :ref:`TRIQS installation instruction <triqslibs:installation>`.
    In the following, we assume that TRIQS is installed in the directory ``path_to_triqs``.
 
 Installation steps
----------------------
+------------------
 
 #. Download the source code of the latest stable version by cloning the ``TRIQS/hubbardI`` repository from GitHub::
 
@@ -41,7 +59,7 @@ Installation steps
      $ make install
 
 Version compatibility
------------------------
+---------------------
 
 Keep in mind that the version of ``hubbardI`` must be compatible with your TRIQS library version,
 see :ref:`TRIQS website <triqslibs:versions>`.
@@ -57,7 +75,7 @@ Checkout the version of the code that you want::
 and follow steps 2 to 4 above to compile the code.
 
 Custom CMake options
-----------------------
+--------------------
 
 The compilation of ``hubbardI`` can be configured using CMake-options::
 
