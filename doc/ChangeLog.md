@@ -2,6 +2,11 @@
 
 # Changelog
 
+## Version 3.2.1
+
+hubbardI version 3.2.1 is a small update
+* automatically build pypi packages
+
 ## Version 3.2.0
 
 hubbardI version 3.2.0 is a compatibility release for TRIQS version 3.2.0
