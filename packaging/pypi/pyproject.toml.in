@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["python"]
+
+[project]
+name = "hubbardI"
+version = "@PROJECT_VERSION@"
+authors = [
+  { name="TRIQS", email="triqs@flatironinstitute.org" }
+]
+description = "Hubbard-I impurity solver based on the TRIQS library"
+readme = "README.md"
+keywords = ["triqs", "hhubbard-I", "impurity solver", "dmft"]
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy",
+    "scipy"
+]
+
+[project.urls]
+"Homepage" = "https://triqs.github.io/hartree_fock"
+"Bug Tracker" = "https://github.com/triqs/hartree_fock/issues"
+
+# in case you want an executable hook of your app
+# [project.scripts]
+# solid_dmft = "solid_dmft.main:main"
+
