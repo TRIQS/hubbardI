@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/hubbardI
+      url: https://pypi.org/p/triqs_hubbardI
     permissions:
       id-token: write  # IMPORTANT: mandatory for trusted publishing
 
