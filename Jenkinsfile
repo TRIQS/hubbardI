@@ -25,7 +25,7 @@ def platforms = [:]
 
 /****************** linux builds (in docker) */
 /* Each platform must have a cooresponding Dockerfile.PLATFORM in triqs/packaging */
-def dockerPlatforms = ["ubuntu-clang", "ubuntu-gcc"]
+def dockerPlatforms = ["ubuntu-clang", "ubuntu-gcc", "ubuntu-intel"]
 /* .each is currently broken in jenkins */
 for (int i = 0; i < dockerPlatforms.size(); i++) {
   def platform = dockerPlatforms[i]
@@ -42,10 +42,10 @@ for (int i = 0; i < dockerPlatforms.size(); i++) {
       if (platform == documentationPlatform)
         args = '-DBuild_Documentation=1'
       else if (platform == "sanitize")
-        args = '-DASAN=ON -DUBSAN=ON'
+        args = '-DASAN=ON -DUBSAN=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo'
       def img = docker.build("flatironinstitute/${dockerName}:${env.BRANCH_NAME}-${env.STAGE_NAME}", "--build-arg APPNAME=${projectName} --build-arg BUILD_ID=${env.BUILD_TAG} --build-arg CMAKE_ARGS='${args}' .")
       catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-        img.inside() {
+        img.inside("--shm-size=4gb") {
           sh "make -C \$BUILD/${projectName} test CTEST_OUTPUT_ON_FAILURE=1"
         }
       }
@@ -89,6 +89,7 @@ for (int i = 0; i < osxPlatforms.size(); i++) {
           "LD_LIBRARY_PATH=$hdf5/lib",
           "PYTHONPATH=$installDir/lib/python3.9/site-packages",
           "CMAKE_PREFIX_PATH=$venv/lib/cmake/triqs",
+          "VIRTUAL_ENV=$venv",
           "OMP_NUM_THREADS=2"]) {
         deleteDir()
         /* note: this is installing into the parent (triqs) venv (install dir), which is thus shared among apps and so not be completely safe */
