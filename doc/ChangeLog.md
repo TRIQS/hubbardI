@@ -2,6 +2,24 @@
 
 # Changelog
 
+## Version 3.3.0
+
+hubbardI version 3.3.0 is a compatibility release for TRIQS version 3.3.0
+We now provide pypi packages for releases in this repository.
+
+We thank all contributors: Thomas Hahn, Alexander Hampel, Henri Menke, Nils Wentzell
+
+Find below an itemized list of changes in this release.
+
+### doc
+* update readme
+* Add sections for debian package install and docker image
+
+### PyPi
+* Add pypi workflow and project description
+* Prepare automatic pypi packaging
+
+
 ## Version 3.2.1
 
 hubbardI version 3.2.1 is a small update
