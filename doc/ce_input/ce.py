@@ -37,13 +37,15 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 
 filename = 'ce'
 
-SK = SumkDFT(hdf_file = filename+'.h5', use_dft_blocks = False)
-
 beta = 100.0 
+
+mesh = MeshImFreq(beta = beta, n_iw = 1025, S = 'Fermion'
+
+SK = SumkDFT(hdf_file = filename+'.h5', use_dft_blocks = False, mesh = mesh)
  
 Sigma = SK.block_structure.create_gf(beta=beta)
 SK.put_Sigma([Sigma])
-G = SK.extract_G_loc()
+G = SK.extract_G_loc(transform_to_solver_blocks=False)
 SK.analyse_block_structure_from_gf(G, threshold = 1e-2)
 for i_sh in range(len(SK.deg_shells)):
     num_block_deg_orbs = len(SK.deg_shells[i_sh])
@@ -59,7 +61,7 @@ n_orb = SK.corr_shells[0]['dim']
 spin_names = ['up','down']
 orb_names = [i for i in range(0,n_orb)]
 
-gf_struct = SK.gf_struct_solver[0]
+gf_struct = [(key, val) for key, val in SK.gf_struct_solver[0].items()]
 mpi.report('Sumk to Solver: %s'%SK.sumk_to_solver)
 mpi.report('GF struct sumk: %s'%SK.gf_struct_sumk)
 mpi.report('GF struct solver: %s'%SK.gf_struct_solver)
@@ -72,7 +74,7 @@ U = 6.0
 J = 0.7
 
 U_sph = U_matrix_slater(l=3, U_int=U, J_hund=J)
-U_cubic = transform_U_matrix(U_sph, spherical_to_cubic(l=3, convention=''))
+U_cubic = transform_U_matrix(U_sph, spherical_to_cubic(l=3, convention='vasp'))
 
 H = h_int_slater(spin_names, orb_names, U_cubic, map_operator_structure=SK.sumk_to_solver[0])
 
@@ -107,11 +109,11 @@ SK.dc_energ = mpi.bcast(SK.dc_energ)
 SK.chemical_potential = mpi.bcast(SK.chemical_potential)
 
 # Calc the first G0
-SK.symm_deg_gf(S.Sigma_iw,orb=0)
+SK.symm_deg_gf(S.Sigma_iw,ish=0)
 SK.put_Sigma(Sigma_imp = [S.Sigma_iw])
 SK.calc_mu(precision=0.01)
 S.G_iw << SK.extract_G_loc()[0]
-SK.symm_deg_gf(S.G_iw, orb=0)
+SK.symm_deg_gf(S.G_iw, ish=0)
 
 #Init the DC term and the self-energy if no previous iteration was found
 if iteration_offset == 0:
@@ -137,7 +139,7 @@ for it in range(iteration_offset, iteration_offset + n_iterations):
     SK.calc_dc(dm, U_interact=U, J_hund=J, orb=0, use_dc_formula=DC_type)
 
     # Get new G
-    SK.symm_deg_gf(S.Sigma_iw,orb=0)
+    SK.symm_deg_gf(S.Sigma_iw,ish=0)
     SK.put_Sigma(Sigma_imp=[S.Sigma_iw])
     SK.calc_mu(precision=0.01)
     S.G_iw << SK.extract_G_loc()[0]
