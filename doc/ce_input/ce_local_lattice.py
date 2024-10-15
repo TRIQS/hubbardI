@@ -29,47 +29,54 @@ import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 filename = 'ce'
-SK_tools = SumkDFTTools(hdf_file = filename+'.h5', use_dft_blocks = False)
 beta = 100.0
+mesh = MeshImFreq(beta=beta, n_iw=1025, S='Fermion')
+SK_tools = SumkDFTTools(hdf_file = filename+'.h5', use_dft_blocks = False, mesh = mesh)
 
 # We analyze the block structure of the Hamiltonian
 Sigma = SK_tools.block_structure.create_gf(beta=beta)
 
 SK_tools.put_Sigma([Sigma])
-G = SK_tools.extract_G_loc()
+G = SK_tools.extract_G_loc(transform_to_solver_blocks=False)
 SK_tools.analyse_block_structure_from_gf(G, threshold = 1e-2)
-gf_struct = SK_tools.gf_struct_solver[0]
+gf_struct = [(key,val) for key, val in SK_tools.gf_struct_solver[0].items()]
 
 S = Solver(beta=beta, gf_struct=gf_struct)
 
-# non-interacting chemical potential
+# non-interacting chemical potential, interacting chemical potential, and double counting
 chemical_potential0 = 0.0
-
+chemical_potential = 0.0
+dc_imp = None
 if mpi.is_master_node():
     ar = HDFArchive(filename+'.h5','a')
     if 'iteration_count' in ar['DMFT_results']:
         previous_present = True
         iteration_offset = ar['DMFT_results']['iteration_count']+1
         print('reading iteration'+str(iteration_offset))
-        SK_tools.dc_imp = ar['DMFT_results']['Iterations']['dc_imp'+str(iteration_offset-1)]
+        dc_imp = ar['DMFT_results']['Iterations']['dc_imp'+str(iteration_offset-1)]
         S.Sigma_w = ar['DMFT_results']['Iterations']['Sigma_w_it'+str(iteration_offset-1)]
         dc_energ = ar['DMFT_results']['Iterations']['dc_energ'+str(iteration_offset-1)]
-        SK_tools.chemical_potential = ar['DMFT_results']['Iterations']['chemical_potential'+str(iteration_offset-1)].real
+        chemical_potential = ar['DMFT_results']['Iterations']['chemical_potential'+str(iteration_offset-1)].real
         chemical_potential0 = ar['DMFT_results']['Iterations']['chemical_potential0'].real
 
 mpi.barrier()
 S.Sigma_w << mpi.bcast(S.Sigma_w)
-SK_tools.chemical_potential = mpi.bcast(SK_tools.chemical_potential)
+
+# create new SumkTools with ReFreqMesh
+SK_tools = SumkDFTTools(hdf_file = filename+'.h5', use_dft_blocks = False, mesh = S.Sigma_w.mesh)
+SK_tools.analyse_block_structure_from_gf(G, threshold = 1e-2)
+
+SK_tools.chemical_potential = mpi.bcast(chemical_potential)
 chemical_potential0 = mpi.bcast(chemical_potential0)
-SK_tools.dc_imp = mpi.bcast(SK_tools.dc_imp)
+SK_tools.dc_imp = mpi.bcast(dc_imp)
 SK_tools.put_Sigma(Sigma_imp = [S.Sigma_w])
 
 idelta = 0.1
-DOS, DOSproj, DOSproj_orb = SK_tools.dos_wannier_basis(broadening=idelta, with_dc=True, with_Sigma=True)
+DOS, DOSproj, DOSproj_orb = SK_tools.density_of_states(broadening=idelta, proj_type='wann', with_dc=True, with_Sigma=True, save_to_file=False)
+
 SK_tools.chemical_potential = chemical_potential0
 SK_tools.put_Sigma(Sigma_imp = [0.0*S.Sigma_w])
-idelta = 0.1
-DOS0, DOSproj0, DOSproj0_orb = SK_tools.dos_wannier_basis(broadening=idelta, with_dc=False, with_Sigma=True)
+DOS0, DOSproj0, DOSproj0_orb = SK_tools.density_of_states(broadening=idelta, proj_type='wann', with_dc=False, with_Sigma=True, save_to_file=False)
 
 if mpi.is_master_node(): 
     ar['DMFT_results']['Iterations']['DOS_it'+str(iteration_offset-1)] = DOS
