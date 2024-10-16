@@ -37,12 +37,12 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 
 filename = 'ce'
 
-beta = 100.0 
+beta = 100.0
 
-mesh = MeshImFreq(beta = beta, n_iw = 1025, S = 'Fermion'
+mesh = MeshImFreq(beta = beta, n_iw = 1025, S = 'Fermion')
 
 SK = SumkDFT(hdf_file = filename+'.h5', use_dft_blocks = False, mesh = mesh)
- 
+
 Sigma = SK.block_structure.create_gf(beta=beta)
 SK.put_Sigma([Sigma])
 G = SK.extract_G_loc(transform_to_solver_blocks=False)
@@ -69,7 +69,7 @@ mpi.report('GF struct solver: %s'%SK.gf_struct_solver)
 S = Solver(beta=beta, gf_struct=gf_struct)
 
 # Construct the Hamiltonian and save it in Hamiltonian_store.txt
-H = Operator() 
+H = Operator()
 U = 6.0
 J = 0.7
 
@@ -95,7 +95,7 @@ if mpi.is_master_node():
     if not 'DMFT_input' in ar: ar.create_group('DMFT_input')
     if not 'Iterations' in ar['DMFT_input']: ar['DMFT_input'].create_group('Iterations')
 
-    if 'iteration_count' in ar['DMFT_results']: 
+    if 'iteration_count' in ar['DMFT_results']:
         iteration_offset = ar['DMFT_results']['iteration_count']+1
         S.Sigma_iw = ar['DMFT_results']['Iterations']['Sigma_it'+str(iteration_offset-1)]
         SK.dc_imp = ar['DMFT_results']['Iterations']['dc_imp'+str(iteration_offset-1)]
@@ -125,9 +125,9 @@ mpi.report('%s DMFT cycles requested. Starting with iteration %s.'%(n_iterations
 
 # The infamous DMFT self consistency cycle
 for it in range(iteration_offset, iteration_offset + n_iterations):
-    
+
     mpi.report('Doing iteration: %s'%it)
-    
+
     # Get G0
     S.G0_iw << inverse(S.Sigma_iw + inverse(S.G_iw))
 
@@ -143,13 +143,13 @@ for it in range(iteration_offset, iteration_offset + n_iterations):
     SK.put_Sigma(Sigma_imp=[S.Sigma_iw])
     SK.calc_mu(precision=0.01)
     S.G_iw << SK.extract_G_loc()[0]
-    
+
     # print densities
     for sig,gf in S.G_iw:
         mpi.report("Orbital %s density: %.6f"%(sig,dm[sig][0,0]))
     mpi.report('Total charge of Gloc : %.6f'%S.G_iw.total_density())
 
-    if mpi.is_master_node(): 
+    if mpi.is_master_node():
         ar['DMFT_results']['iteration_count'] = it
         ar['DMFT_results']['Iterations']['Sigma_it'+str(it)] = S.Sigma_iw
         ar['DMFT_results']['Iterations']['Sigma_w_it'+str(it)] = S.Sigma_w
