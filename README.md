@@ -8,3 +8,13 @@ Requires a working [TRIQS](https://triqs.github.io/triqs) installation with a ma
 
 ### Usage ###
 The Solver comes with the same interface as, e.g., the [cthyb solver](https://triqs.github.io/cthyb/latest/index.html). More information on how to use the solver can be found in the [documentation](https://triqs.github.io/hubbardI/latest/documentation.html).
+
+## Support
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" width="20%" srcset="doc/_static/CCQ-dark.png">
+  <img alt="Flatiron Center for Computational Quantum Physics logo." width="20%" src="doc/_static/CCQ.png">
+</picture>
+
+TRIQS/hubbardI is supported by the Flatiron Institute, a division of the Simons Foundation.
+
