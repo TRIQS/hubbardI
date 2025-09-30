@@ -31,7 +31,7 @@ Compiling hubbardI from source
 Prerequisites
 -------------
 
-#. The :ref:`TRIQS <triqslibs:welcome>` library, see :ref:`TRIQS installation instruction <triqslibs:installation>`.
+#. The :ref:`TRIQS <triqslibs:welcome>` library, see :ref:`TRIQS installation instruction <triqslibs:triqs_install>`.
    In the following, we assume that TRIQS is installed in the directory ``path_to_triqs``.
 
 Installation steps
