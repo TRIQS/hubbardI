@@ -32,7 +32,7 @@ D, V, U = 1.0, 0.2, 4.0
 e_f, beta = -U/2.0, 50
 
 # initialize the solver
-S = Solver(beta = beta, gf_struct = [ ('up',1), ('down',1) ],idelta=0.5,n_iw=20,n_tau=2,n_w=2)
+S = Solver(beta = beta, gf_struct = [ ('up',1), ('down',1) ],idelta=0.5,n_iw=50,n_tau=2,n_w=2)
 
 # set the non-interacting Green's function
 for name, g0 in S.G0_iw: g0 << inverse(iOmega_n - e_f - V**2 * Wilson(D))
@@ -56,7 +56,7 @@ with HDFArchive("class.ref.h5",'r') as Results:
 for key in dir(S):
     if 'G' in key or 'Sigma' in key:
         print('comparing', key)
-        
+
         val = getattr(S, key)
         val_ref = getattr(S_ref, key)
 
