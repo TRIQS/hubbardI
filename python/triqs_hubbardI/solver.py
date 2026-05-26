@@ -68,10 +68,10 @@ class Solver():
 
         name_list = [block for block, block_size in gf_struct]
         for block, block_size in gf_struct:
-            g_w_list.append(GfReFreq(window = (w_min, w_max), n_points = n_w, target_shape = (block_size, block_size)))
-            g_iw_list.append(GfImFreq(beta = beta, n_points = n_iw, target_shape = (block_size, block_size)))
-            g_tau_list.append(GfImTime(beta = beta, n_points = n_tau, target_shape = (block_size, block_size)))
-            g_l_list.append(GfLegendre(beta = beta, n_points = n_l, target_shape = (block_size, block_size)))
+            g_w_list.append(Gf(mesh = MeshReFreq(window = (w_min, w_max), n_w = n_w), target_shape = (block_size, block_size)))
+            g_iw_list.append(Gf(mesh = MeshImFreq(beta = beta, statistic = 'Fermion', n_iw = n_iw), target_shape = (block_size, block_size)))
+            g_tau_list.append(Gf(mesh = MeshImTime(beta = beta, statistic = 'Fermion', n_tau = n_tau), target_shape = (block_size, block_size)))
+            g_l_list.append(Gf(mesh = MeshLegendre(beta = beta, statistic = 'Fermion', max_n = n_l), target_shape = (block_size, block_size)))
 
         self.G0_w = BlockGf(name_list = name_list, block_list = g_w_list)
         self.G0_iw = BlockGf(name_list = name_list, block_list = g_iw_list)
