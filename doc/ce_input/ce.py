@@ -22,7 +22,7 @@ from itertools import *
 import numpy as np
 import triqs.utility.mpi as mpi
 from h5 import *
-from triqs.gf import *
+from triqs.gfs import *
 import sys, triqs.version as triqs_version
 from triqs_dft_tools.sumk_dft import *
 from triqs_dft_tools.sumk_dft_tools import *

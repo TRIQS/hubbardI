@@ -18,7 +18,7 @@
 # hubbardI. If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from triqs.gf import *
+from triqs.gfs import *
 from triqs.atom_diag import *
 from itertools import *
 import numpy as np

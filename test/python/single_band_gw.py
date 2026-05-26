@@ -22,7 +22,7 @@
 
 from triqs_hubbardI import *
 from h5 import *
-from triqs.gf import *
+from triqs.gfs import *
 from triqs.operators import *
 from triqs.utility.h5diff import h5diff
 
