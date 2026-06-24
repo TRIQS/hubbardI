@@ -35,4 +35,5 @@ foreach(test ${all_tests})
   add_test(NAME Py_${test_name} COMMAND ${TRIQS_PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${test_dir}/${test_name}.py WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${test_dir})
   set_property(TEST Py_${test_name} APPEND PROPERTY ENVIRONMENT_MODIFICATION
     "PYTHONPATH=path_list_prepend:${PROJECT_BINARY_DIR}/python")
+  set_property(TEST Py_${test_name} APPEND PROPERTY ENVIRONMENT ${SANITIZER_RT_PRELOAD})
 endforeach()

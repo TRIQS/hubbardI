@@ -95,7 +95,7 @@ def platforms = [:]
 
 /****************** linux builds (in docker) */
 /* Each platform must have a corresponding Dockerfile.PLATFORM in triqs/packaging */
-def dockerPlatforms = ["ubuntu-clang", "ubuntu-gcc", "ubuntu-intel"]
+def dockerPlatforms = ["ubuntu-clang", "ubuntu-gcc"]
 for (int i = 0; i < dockerPlatforms.size(); i++) {
   def platform = dockerPlatforms[i]
   platforms[platform] = { ->
