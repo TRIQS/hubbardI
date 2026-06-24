@@ -30,5 +30,5 @@ Learn how to use hubbardI in the :ref:`documentation`.
    install
    documentation
    issues
-   ChangeLog.md
+   ChangeLog
    about
