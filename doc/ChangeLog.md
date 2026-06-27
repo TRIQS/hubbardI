@@ -2,6 +2,30 @@
 
 # Changelog
 
+## Version 4.0.0
+
+hubbardI version 4.0.0 is a compatibility release for TRIQS version 4.0.0.
+It is based on the latest app4triqs python-only skeleton and runs the
+`port_to_triqs4` porting script to adapt to the TRIQS 4.0 API.
+
+We thank all contributors: Jennifer Coulter, Thomas Hahn, Alexander Hampel, Harrison LaBollita, Henri Menke, Dylan Simon, Nils Wentzell
+
+Find below an itemized list of changes in this release.
+
+### General
+* Run port_to_triqs4 script for TRIQS 4.0 compatibility
+* Use the latest app4triqs/4.0.x python-only skeleton
+* Construct Green's functions via `Mesh` classes instead of the deprecated `GfReFreq`/`GfImFreq`/`GfImTime`/`GfLegendre` constructors
+* Replace `triqs.gf` imports with `triqs.gfs`
+* Remove the GTest external dependency
+
+### doc
+* Add Flatiron Institute support notice to README.md
+
+### jenkins
+* Migrate to the new k8s-based Jenkins system
+
+
 ## Version 3.3.0
 
 hubbardI version 3.3.0 is a compatibility release for TRIQS version 3.3.0
