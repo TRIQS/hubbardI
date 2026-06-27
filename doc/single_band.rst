@@ -9,7 +9,7 @@ Here is the implementation for an Anderson impurity model with a flat (Wilson) h
 
    from triqs_hubbardI import *
    from h5 import *
-   from triqs.gf import *
+   from triqs.gfs import *
    from triqs.operators import *
    from triqs.utility.h5diff import h5diff
    from h5 import HDFArchive
@@ -37,7 +37,7 @@ Let us plot the result by
 
 .. code-block:: python
 		
-	from triqs.gf import *
+	from triqs.gfs import *
 	from h5 import *
 	from triqs.plot.mpl_interface import oplot
 
