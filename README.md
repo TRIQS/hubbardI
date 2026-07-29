@@ -1,4 +1,5 @@
 [![build](https://github.com/TRIQS/hubbardI/workflows/build/badge.svg)](https://github.com/TRIQS/hubbardI/actions?query=workflow%3Abuild)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21691762.svg)](https://doi.org/10.5281/zenodo.21691762)
 
 # hubbardI - A Hubbard-I solver based on triqs atom_diag
 
