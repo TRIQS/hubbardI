@@ -1,4 +1,5 @@
 [![build](https://github.com/TRIQS/hubbardI/workflows/build/badge.svg)](https://github.com/TRIQS/hubbardI/actions?query=workflow%3Abuild)
+[![PyPI version](https://img.shields.io/pypi/v/triqs_hubbardI.svg)](https://pypi.org/project/triqs_hubbardI/)
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21691762-blue.svg)](https://doi.org/10.5281/zenodo.21691762)
 
 # hubbardI - A Hubbard-I solver based on triqs atom_diag
