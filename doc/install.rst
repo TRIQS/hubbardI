@@ -9,6 +9,7 @@ Packaged Versions of hubbardI
 =============================
 
 .. _ubuntu_debian:
+
 Ubuntu Debian packages
 ----------------------
 
@@ -30,6 +31,7 @@ Note that the PyPI package requires a TRIQS installation with a matching major.m
 See also `pypi.org/project/triqs_hubbardI <https://pypi.org/project/triqs_hubbardI/>`_.
 
 .. _docker:
+
 Docker
 ------
 
