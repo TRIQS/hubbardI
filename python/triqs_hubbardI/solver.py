@@ -28,6 +28,12 @@ import triqs.utility.mpi as mpi
 class Solver():
     """Class providing initialization and solve function. Contains all relevant Greensfunctions and self energy."""
 
+    # Application-prefixed hdf5 format tag, following the convention used by the
+    # C++ solvers (cthyb: CTHYB_SolverCore, ctint: CTINT_SolverCore). Without it
+    # the tag would default to the class name "Solver", which is not unique
+    # across the TRIQS ecosystem.
+    _hdf5_format_ = "HUBBARDI_Solver"
+
     def __init__(self, beta, gf_struct, n_iw=1025, n_tau=10001, n_l=30, n_w=500,w_min=-15,w_max=15,idelta=0.01):
         """
 
